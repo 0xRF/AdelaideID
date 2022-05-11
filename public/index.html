@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adelaide ID</title>
+    <script src="https://unpkg.com/quagga"></script>
+    <script src="https://unpkg.com/vue@2"></script>
+    <script src="https://unpkg.com/js-cookie"></script>
+    <script src="index.js" defer></script>
+</head>
+<body>
+    <div id="app">
+        <div v-if="token !== undefined">
+            
+        </div>
+        <div v-else>
+            <label for="token">Input token:</label>
+            <input name="token" type="text" v-model="newToken" @change="setToken">
+        </div>
+    </div>
+</body>
+</html>
