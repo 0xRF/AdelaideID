@@ -25,7 +25,7 @@ app.get("/api/session", (req, res) => {
 
 app.post("/api/authenticate", async (req, res) => {
     try {
-        let token = req.body.canvasToken;
+        let token = req.body.canvas_token;
         console.log(req.body);
         let userInfo = await axios.get(CANVAS_ENDPOINT + "users/self",
             {
@@ -52,7 +52,18 @@ app.get("/api/courses", async (req, res) => {
                     "Authorization": `Bearer ${req.session.canvasToken}`
                 }
             });
-        res.send(courses.data);
+
+        let filtered = courses.data.filter(course => {
+            if (!course.enrollments)
+                return false
+            return course.enrollments.some(en => en.type == "teacher")
+        });
+        let result = filtered.map(v => ({
+            id: v.id,
+            name: v.name,
+            course_code: v.course_code
+        }))
+        res.send(result);
     } catch (e) {
         console.error(e);
         res.sendStatus(400);
