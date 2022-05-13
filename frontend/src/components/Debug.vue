@@ -1,52 +1,51 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 import { StreamBarcodeReader } from "vue-barcode-reader";
 
-const session = ref("waiting...")
-const authResponse = ref("waiting for bearer token...")
-const courses = ref({})
-const token = ref("")
-const loaded = ref(false)
-const authenticated = ref(false)
+const session = ref("waiting...");
+const authResponse = ref("waiting for bearer token...");
+const courses = ref({});
+const token = ref("");
+const loaded = ref(false);
+const authenticated = ref(false);
 
-const studentId = ref("waiting for student id...")
+const studentId = ref("waiting for student id...");
 
 const onDecode = (result) => {
     studentId.value = result;
-}
+};
 
 const getSession = async () => {
-    console.log("fetching...")
+    console.log("fetching...");
     let res = await fetch("/api/session");
     let body = await res.json();
     authenticated.value = body.authenticated || false;
     session.value = body;
     loaded.value = true;
-    if (authenticated.value)
-        getCourses();
-}
+    if (authenticated.value) getCourses();
+};
 
 const submitToken = async () => {
-    console.log("submitting token...")
+    console.log("submitting token...");
     let res = await fetch("/api/authenticate", {
         method: "post",
         body: JSON.stringify({
-            canvas_token: token.value
+            canvas_token: token.value,
         }),
         headers: {
-            "Content-Type": "application/json"
-        }
-    })
+            "Content-Type": "application/json",
+        },
+    });
     let body = await res.json();
     authResponse.value = JSON.stringify(body, undefined, 4);
     getCourses();
-}
+};
 
 const getCourses = async () => {
-    console.log("getting courses...")
-    let res = await fetch("/api/courses")
+    console.log("getting courses...");
+    let res = await fetch("/api/courses");
     courses.value = await res.json();
-}
+};
 
 getSession();
 </script>
@@ -54,15 +53,22 @@ getSession();
 <template>
     <div v-if="loaded">
         <p>Session: {{ session }}</p>
-        <textarea v-if="!authenticated">Authentication response: {{ authResponse }}</textarea>
-        <textarea>Courses: {{ courses.length > 0 ? courses : "waiting for authentication..." }}</textarea>
-        <div class="course" v-for="course in courses" :key="course.id">
-            <h2>{{ course.name }}</h2>
-            <p>{{ course.course_code }}</p>
-        </div>
         <div v-if="!authenticated">
             <label for="token-entry">Enter bearer token: </label>
-            <input type="text" name="token-entry" v-model="token" @change="submitToken">
+            <input
+                v-model="token"
+                type="text"
+                name="token-entry"
+                @change="submitToken"
+            />
+        </div>
+        <p v-if="!authenticated">Authentication response:</p>
+        <textarea v-if="!authenticated" v-model="authResponse" />
+        <p>Courses:</p>
+        <textarea :value="JSON.stringify(courses, undefined, 4)" />
+        <div v-for="course in courses" :key="course.id" class="course">
+            <h2>{{ course.name }}</h2>
+            <p>{{ course.course_code }}</p>
         </div>
     </div>
     <p v-else>connecting to backend...</p>

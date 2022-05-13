@@ -1,5 +1,5 @@
 <script setup>
-import Debug from './components/Debug.vue'
+import Debug from "./components/Debug.vue";
 </script>
 
 <template>
