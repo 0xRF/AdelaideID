@@ -51,29 +51,31 @@ getSession();
 </script>
 
 <template>
-    <div v-if="loaded">
-        <p>Session: {{ session }}</p>
-        <div v-if="!authenticated">
-            <label for="token-entry">Enter bearer token: </label>
-            <input
-                v-model="token"
-                type="text"
-                name="token-entry"
-                @change="submitToken"
-            />
+    <div>
+        <div v-if="loaded">
+            <p>Session: {{ session }}</p>
+            <div v-if="!authenticated">
+                <label for="token-entry">Enter bearer token: </label>
+                <input
+                    v-model="token"
+                    type="text"
+                    name="token-entry"
+                    @change="submitToken"
+                />
+            </div>
+            <p v-if="!authenticated">Authentication response:</p>
+            <textarea v-if="!authenticated" v-model="authResponse" />
+            <p>Courses:</p>
+            <textarea :value="JSON.stringify(courses, undefined, 4)" />
+            <div v-for="course in courses" :key="course.id" class="course">
+                <h2>{{ course.name }}</h2>
+                <p>{{ course.course_code }}</p>
+            </div>
         </div>
-        <p v-if="!authenticated">Authentication response:</p>
-        <textarea v-if="!authenticated" v-model="authResponse" />
-        <p>Courses:</p>
-        <textarea :value="JSON.stringify(courses, undefined, 4)" />
-        <div v-for="course in courses" :key="course.id" class="course">
-            <h2>{{ course.name }}</h2>
-            <p>{{ course.course_code }}</p>
-        </div>
+        <p v-else>connecting to backend...</p>
+        <p>{{ studentId }}</p>
+        <StreamBarcodeReader @decode="onDecode"></StreamBarcodeReader>
     </div>
-    <p v-else>connecting to backend...</p>
-    <p>{{ studentId }}</p>
-    <StreamBarcodeReader @decode="onDecode"></StreamBarcodeReader>
 </template>
 
 <style scoped>
