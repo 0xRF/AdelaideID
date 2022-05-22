@@ -1,4 +1,6 @@
 <script setup>
+    import { ref } from 'vue'
+
     defineProps({
         title: {
             type: String,
@@ -9,10 +11,12 @@
             default: "",
         },
     });
+
+    const colour = ref(`background-color: hsl(${0}, 100%, 90%)`);
 </script>
 
 <template>
-    <div class="card">
+    <div class="card" :style="colour">
         <div class="card-heading">
             <div class="card-text">
                 <h2>{{ title }}</h2>
@@ -24,8 +28,14 @@
             </div>
         </div>
         <div class="navigation">
-            <button style="flex-grow: 1;">Hello</button>
-            <button style="flex-grow: 2;">Hello</button>
+            <button style="flex-grow: 1;">
+                <img src="/assets/external-link.svg"/>
+                <p>MyUni</p>
+            </button>
+            <button style="flex-grow: 2;">
+                <img src="/assets/plus-circle.svg"/>
+                <p>Scan ID</p>
+            </button>
         </div>
     </div>
 </template>
@@ -35,15 +45,17 @@
         display: flex;
         flex-direction: column;
 
-        border: 2px solid black;
         border-radius: 5px;
         height: 176px;
         padding: 16px;
         margin-bottom: 16px;
+
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     }
 
     .card button {
-        border: 2px solid black;
+        border: none;
+        background-color: white;
         border-radius: 20px;
     }
 
@@ -66,5 +78,20 @@
 
     .navigation button {
         height: 28px;
+        gap: 8px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
     }
+
+    button img {
+        height: 16px;
+        width: 16px;
+    }
+
+    button > * {
+        margin: 4px;
+    }
+
 </style>
