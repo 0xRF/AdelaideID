@@ -52,7 +52,7 @@ getSession();
 
 <template>
     <div>
-        <div v-if="loaded">
+        <div v-if="loaded" id="debug">
             <p>Session: {{ session }}</p>
             <div v-if="!authenticated">
                 <label for="token-entry">Enter bearer token: </label>
@@ -85,9 +85,6 @@ a {
 
 textarea {
     display: block;
-    min-width: 500px;
-    min-height: 200px;
-    margin: 20px auto;
 }
 
 .course {
@@ -97,6 +94,10 @@ textarea {
     box-shadow: 0px 2px 8px 0px rgba(100, 100, 100, 0.2);
     width: 20rem;
     padding: 1rem;
-    margin: 2rem auto;
+}
+
+#debug {
+    display: flex;
+    flex-direction: column;
 }
 </style>

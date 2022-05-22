@@ -6,14 +6,14 @@ import DebugPage from "./views/DebugPage.vue";
 const routes = [
     {
         path: "/",
-        name: "Debug",
+        name: "Home",
         component: DebugPage,
     },
-    /*{
-        path: "/ctfs",
-        name: "CTFs",
-        component: () => import("./views/CTFsPage.vue"),
-    }*/
+    {
+        path: "/settings",
+        name: "Settings",
+        component: () => import("./views/SettingsPage.vue"),
+    },
 ];
 
 const router = createRouter({
@@ -30,12 +30,6 @@ router.beforeEach((to, from, next) => {
     });
 
     next();
-});
-
-router.afterEach((to, from) => {
-    const toDepth = to.path.split("/").length;
-    const fromDepth = from.path.split("/").length;
-    to.meta.transitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
 });
 
 export default router;
