@@ -2,6 +2,10 @@
 import { ref } from "vue";
 import { StreamBarcodeReader } from "vue-barcode-reader";
 
+import ConfirmationPopup from "../components/ConfirmationPopup.vue";
+import ClassCard from "../components/ClassCard.vue";
+import StudentCard from "../components/StudentCard.vue";
+
 const session = ref("waiting...");
 const authResponse = ref("waiting for bearer token...");
 const courses = ref({});
@@ -52,6 +56,8 @@ getSession();
 
 <template>
     <div>
+        <StudentCard/>
+
         <div v-if="loaded" id="debug">
             <p>Session: {{ session }}</p>
             <div v-if="!authenticated">
@@ -75,6 +81,8 @@ getSession();
         <p v-else>connecting to backend...</p>
         <p>{{ studentId }}</p>
         <StreamBarcodeReader @decode="onDecode"></StreamBarcodeReader>
+        <ClassCard/>
+        <ConfirmationPopup/>
     </div>
 </template>
 

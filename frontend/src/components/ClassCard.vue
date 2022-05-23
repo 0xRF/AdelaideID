@@ -54,9 +54,7 @@ const colour = ref(`background-color: hsl(${0}, 100%, 90%)`);
 }
 
 .card button {
-    border: none;
     background-color: white;
-    border-radius: 20px;
 }
 
 .card-text {
