@@ -1,5 +1,6 @@
 const config = require('config');
 const axios = require("axios").default;
+const db = require("./DbDal.js");
 
 const CANVAS_ENDPOINT = "https://myuni.adelaide.edu.au/api/v1/";
 const BEARER_TOKEN = config.has('canvas_token') ? config.get('canvas_token') : 'NULL';
@@ -24,13 +25,15 @@ module.exports.getCourses = async () => {
             }
         });
 
+    db.getAssignments();
+
     let filtered = courses.data.filter(course => {
         if (!course.enrollments)
             return false
         return course.enrollments.some(en => en.type == "teacher")
     });
 
-    return result = filtered.map(v => ({
+    return filtered.map(v => ({
         id: v.id,
         name: v.name,
         course_code: v.course_code
