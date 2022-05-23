@@ -21,6 +21,8 @@ CREATE TABLE Assignments(
     course_id int
 );
 
+INSERT INTO `Assignments` VALUES (280470, 77766)
+
 CREATE TABLE Users(
     user_id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
     canvas_token varchar(255) NOT NULL,
@@ -51,3 +53,4 @@ CREATE TABLE Follow_ups(
     FOREIGN KEY (assignment_id) REFERENCES Assignments(assignment_id),
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
+

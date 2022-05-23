@@ -1,8 +1,7 @@
 const express = require("express");
 const session = require("express-session");
 const axios = require("axios").default;
-
-const CANVAS_ENDPOINT = "https://myuni.adelaide.edu.au/api/v1/";
+const canvas = require("./dal/CanvasDal.js");
 
 const port = 8081;
 const app = express();
@@ -27,12 +26,8 @@ app.post("/api/authenticate", async (req, res) => {
     try {
         let token = req.body.canvas_token;
         console.log(req.body);
-        let userInfo = await axios.get(CANVAS_ENDPOINT + "users/self",
-            {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
+        let userInfo = await canvas.getSelf();
+
         // Temporary storage (this will be moved into database once that is set up)
         req.session.canvasToken = token;
         req.session.userInfo = userInfo.data;
@@ -46,24 +41,8 @@ app.post("/api/authenticate", async (req, res) => {
 
 app.get("/api/courses", async (req, res) => {
     try {
-        let courses = await axios.get(CANVAS_ENDPOINT + "courses",
-            {
-                headers: {
-                    "Authorization": `Bearer ${req.session.canvasToken}`
-                }
-            });
-
-        let filtered = courses.data.filter(course => {
-            if (!course.enrollments)
-                return false
-            return course.enrollments.some(en => en.type == "teacher")
-        });
-        let result = filtered.map(v => ({
-            id: v.id,
-            name: v.name,
-            course_code: v.course_code
-        }))
-        res.send(result);
+        let courses = await canvas.getCourses();
+        res.send(courses);
     } catch (e) {
         console.error(e);
         res.sendStatus(400);
