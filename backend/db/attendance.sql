@@ -7,8 +7,6 @@ DROP TABLE IF EXISTS Students;
 DROP TABLE IF EXISTS Assignments;
 DROP TABLE IF EXISTS Users;
 
-
-
 CREATE TABLE Students (
     student_id varchar(7) PRIMARY KEY NOT NULL,
     first_name varchar(255) NOT NULL,
@@ -20,8 +18,6 @@ CREATE TABLE Assignments(
     assignment_id int PRIMARY KEY NOT NULL,
     course_id int
 );
-
-INSERT INTO `Assignments` VALUES (280470, 77766)
 
 CREATE TABLE Users(
     user_id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
