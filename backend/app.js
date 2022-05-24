@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const axios = require("axios").default;
 const canvas = require("./dal/CanvasDal.js");
+const db = require("./dal/DbDal.js");
 
 const port = 8081;
 const app = express();
