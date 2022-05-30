@@ -1,21 +1,33 @@
 <template>
-    <div class="student-card">
-        <div class="student-card-top">
+    <div class="id-card">
+        <div class="id-card-top">
             <img src="/assets/uni_logo.png" />
         </div>
 
-        <img class="id-photo" src="" />
+        <div class="id-card-main">
+            <div class="id-details">
+                <p>First Name:</p>
+                <p><b>Jimmy</b></p>
+
+                <p>Last Name:</p>
+                <p><b>Wafting</b></p>
+                
+                <p>Student ID:</p>
+                <p><b>182019</b></p>
+            </div>
+            <img class="id-photo" src="" />
+        </div>
     </div>
 </template>
 
 <style scoped>
-.student-card {
+.id-card {
     height: 256px;
     box-shadow: 0px 2px 8px rgba(99, 99, 99, 0.2);
     border-radius: 5px;
 }
 
-.student-card-top {
+.id-card-top {
     height: 48px;
 
     background: #141D2B;
@@ -24,15 +36,22 @@
     border-bottom: 2px solid hsl(0, 100%, 42%);
 }
 
-.student-card-top img {
+.id-card-top img {
     height: 46px;
     margin-left: 8px;
 }
 
+.id-card-main {
+    display: flex;
+    margin: 16px;
+}
+.id-details {
+    flex: 1;
+}
 .id-photo {
+    flex: 1;
     width: 124px;
     height: 176px;
     background-color: #E5E5E5;
-    margin: 16px;
 }
 </style>
