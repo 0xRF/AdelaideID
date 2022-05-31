@@ -17,6 +17,9 @@ const routes = [{
     {
         path: "/scan",
         name: "Scanner",
+        meta: {
+            fullscreen: true,
+        },
         component: () =>
             import ("./views/BarcodeScanner.vue"),
     },

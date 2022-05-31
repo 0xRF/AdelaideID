@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
-import { StreamBarcodeReader } from "vue-barcode-reader";
+import StreamBarcodeReader from "../components/StreamBarcodeReader.vue";
+
 
 import ConfirmationPopup from "../components/ConfirmationPopup.vue";
 import ClassCard from "../components/ClassCard.vue";

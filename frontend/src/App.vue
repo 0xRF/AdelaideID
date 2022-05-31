@@ -15,9 +15,17 @@ import router from "./router";
             ><img src="/assets/cog.svg" alt="Settings icon"
         /></router-link>
     </header>
-    <div id="headergap" />
 
-    <main>
+    
+    <div v-if="!router.currentRoute.value.meta.fullscreen" id="headergap" />
+
+    <router-view v-if="router.currentRoute.value.meta.fullscreen" v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+            <component :is="Component" />
+        </transition>
+    </router-view>
+
+    <main v-else>
         <router-view v-slot="{ Component }">
             <transition name="fade" mode="out-in">
                 <component :is="Component" />

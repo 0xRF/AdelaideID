@@ -11,8 +11,8 @@
     },
     "dependencies": {
         "vue": "^3.2.25",
-        "vue-barcode-reader": "^1.0.2",
-        "vue-router": "^4.0.15"
+        "vue-router": "^4.0.15",
+        "@zxing/library": "^0.19.1"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^2.3.3",
