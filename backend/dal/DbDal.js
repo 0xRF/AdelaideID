@@ -26,18 +26,14 @@ function addAssignment(assignment_id, course_id) {
     let pool = getConnectionPool();
     pool.getConnection((err, con) => {
         if (err) throw err;
-        con.query('SELECT COUNT(*) FROM Assignments WHERE assignment_id = ?', [assignment_id], (err, data, fields) => {
-            if (err) throw err;
-            if (data[0] == 0) {
-                con.query('INSERT INTO `Assignments` VALUES (?, ?);', [assignment_id, course_id], (err, res) => {
-                    if (err) throw err;
-                    console.log(`Inserted assignment ${assignment_id}, course ${course_id} into db`);
-                });
-            }
-            con.release();
+        con.query('INSERT INTO `Assignments` VALUES (?, ?);', [assignment_id, course_id], (err, res) => {
+            if (err && err.code != 'ER_DUP_ENTRY') throw err;
+            console.log(`Inserted assignment ${assignment_id}, course ${course_id} into db`);
         });
+        con.release();
     });
 };
+module.exports.addAssignment = addAssignment;
 
 module.exports.getAssignments = () => {
     let pool = getConnectionPool();
@@ -54,23 +50,17 @@ module.exports.getAssignments = () => {
     return assignments;
 };
 
-module.exports.addStudent = (courseId, assignmentId, studentId, userId, timeStamp) => {
+module.exports.addStudent = (courseId, assignmentId, studentId, userId) => {
     let pool = getConnectionPool();
 
     addAssignment(assignmentId, courseId);
 
     pool.getConnection((err, con) => {
         if (err) throw err;
-        con.query('SELECT COUNT(*) FROM Attendance_records WHERE assignment_id = ? AND student_id = ?', [assignmentId, studentId], (err, data, fields) => {
-            if (data[0] == 0) {
-                con.query('INSERT INTO Attendance_records VALUES (?, ?, ?, ?)', [timeStamp, assignmentId, studentId, userId], data, fields], (err, res) => {
-                    if (err) throw err;
-                    console.log('Adding a students attendance');
-                    con.release();
-                });
-            }
-            else
-                console.log('this student has already been added...');
+        con.query('INSERT INTO Attendance_records (time_stamp, assignment_id, student_id, user_id) VALUES (now(), ?, ?, ?)', [assignmentId, studentId, userId], (err, res) => {
+            if (err && err.code != 'ER_DUP_ENTRY') throw err;
+            console.log('Adding a students attendance');
+            con.release();
         });
     });
 };
