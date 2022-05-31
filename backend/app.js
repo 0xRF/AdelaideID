@@ -50,6 +50,16 @@ app.get("/api/courses", async (req, res) => {
     }
 })
 
+app.get("/api/assignments", async (req, res) => {
+    try {
+        let assignments = await db.getAssignments();
+        res.send(assignments);
+    } catch (e) {
+        console.error(e);
+        res.sendStatus(400);
+    }
+})
+
 app.listen(port, () => {
     console.log(`listening on port ${port}`);
 })

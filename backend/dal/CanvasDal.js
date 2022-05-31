@@ -7,9 +7,8 @@ const BEARER_TOKEN = config.has('canvas_token') ? config.get('canvas_token') : '
 console.log('Canvas Module Loaded');
 console.log(`Bearer Token ${BEARER_TOKEN}`);
 
-
 //TODO map or only return the fields we actually use or need
-module.exports.getSelf = async () => {
+async function getSelf() {
     let userInfo = await axios.get(CANVAS_ENDPOINT + "users/self",
         {
             headers: {
@@ -19,8 +18,8 @@ module.exports.getSelf = async () => {
     return userInfo.data;
 };
 
-module.exports.getStudentInfo = async (student_id, course_id) => {
-    let userInfo = await axios.get(`${CANVAS_ENDPOINT}courses/${course_id}/users/sis_user:${student_id}`,
+async function getStudentInfo(student_id, course_id) {
+    let userInfo = await axios.get(`${CANVAS_ENDPOINT}courses/${course_id}/users/sis_user_id:${student_id}`,
         {
             headers: {
                 "Authorization": `Bearer ${BEARER_TOKEN}`
@@ -30,7 +29,7 @@ module.exports.getStudentInfo = async (student_id, course_id) => {
 };
 
 
-module.exports.getCourses = async () => {
+async function getCourses() {
     let courses = await axios.get(CANVAS_ENDPOINT + "courses",
         {
             headers: {
@@ -51,7 +50,7 @@ module.exports.getCourses = async () => {
     }))
 };
 
-module.exports.getAssignments = async (course_id) => {
+async function getAssignments(course_id) {
     let assignments = await axios.get(`${CANVAS_ENDPOINT}courses/${course_id}/assignments`,
         {
             headers: {
@@ -70,3 +69,10 @@ module.exports.getAssignments = async (course_id) => {
         name: v.name
     }))
 };
+
+module.exports = {
+    getSelf,
+    getStudentInfo,
+    getCourses,
+    getAssignments
+}
