@@ -23,6 +23,12 @@ const routes = [{
         component: () =>
             import ("./views/BarcodeScanner.vue"),
     },
+    {
+        path: "/add",
+        name: "Manual Add",
+        component: () =>
+            import ("./views/AddPage.vue"),
+    },
 ];
 
 const router = createRouter({

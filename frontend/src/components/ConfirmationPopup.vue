@@ -38,7 +38,7 @@
 
 <style scoped>
 .confirmation-popup {
-    position: absolute;
+    position: fixed;
     background-color: antiquewhite;
 
     width: 100%;
@@ -61,41 +61,6 @@
     align-items: center;
     text-align: center;
     margin-bottom: 32px;
-}
-
-.confirmation-buttons {
-    display: flex;
-    flex-direction: row;
-    width: auto;
-    gap: 16px;
-}
-
-.confirmation-buttons > * {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: row;
-}
-
-.confirmation-cancel {
-    background: #FF8080;
-}
-
-.confirmation-confirm {
-    background: #80FF8A;
-}
-
-.confirmation-buttons p {
-    margin: 16px 0;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-}
-
-.confirmation-buttons img {
-    height: 64px;
-    width: 64px;
-    padding: 20px;
 }
 
 .success-icon {

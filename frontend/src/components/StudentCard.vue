@@ -5,16 +5,16 @@
         </div>
 
         <div class="id-card-main">
-            <div class="id-details">
-                <p>First Name:</p>
-                <p><b>Jimmy</b></p>
+            <p class="id-details">
+                <span>First Name:</span><br>
+                <b>Jimmy</b><br><br>
 
-                <p>Last Name:</p>
-                <p><b>Wafting</b></p>
+                <span>Last Name:</span><br>
+                <b>Wafting</b><br><br>
                 
-                <p>Student ID:</p>
-                <p><b>182019</b></p>
-            </div>
+                <span>Student ID:</span><br>
+                <b>182019</b>
+            </p>
             <img class="id-photo" src="" />
         </div>
     </div>
@@ -45,9 +45,17 @@
     display: flex;
     margin: 16px;
 }
+
 .id-details {
+    font-size: 16px;
     flex: 1;
+    line-height: 18px;
 }
+
+.id-details span {
+    font-size: 14px;
+}
+
 .id-photo {
     flex: 1;
     width: 124px;
