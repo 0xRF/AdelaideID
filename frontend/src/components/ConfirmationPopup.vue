@@ -21,7 +21,7 @@
         </div>
         
         <div v-else>
-            <p class="confirmation-text">Mark Jimmy as present for Web and Database Computing?</p>
+            <p class="confirmation-text">Mark <b>Jimmy</b> as present for <b>Web and Database Computing?</b></p>
             <div class="confirmation-buttons">
                 <button class="confirmation-cancel">
                     <img src="/assets/x-circle.svg" alt="Back arrow"/>
@@ -57,8 +57,8 @@
     width: auto;
     height: 32px;
 
-    display: flex;
-    align-items: center;
+    /* display: flex; */
+    /* align-items: center; */
     text-align: center;
     margin-bottom: 32px;
 }

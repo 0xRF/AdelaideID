@@ -1,8 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import StreamBarcodeReader from "../components/StreamBarcodeReader.vue";
-
-
 import ConfirmationPopup from "../components/ConfirmationPopup.vue";
 import ClassCard from "../components/ClassCard.vue";
 import StudentCard from "../components/StudentCard.vue";
@@ -81,7 +78,6 @@ getSession();
         </div>
         <p v-else>connecting to backend...</p>
         <p>{{ studentId }}</p>
-        <StreamBarcodeReader @decode="onDecode"></StreamBarcodeReader>
         <ClassCard/>
         <ConfirmationPopup/>
     </div>

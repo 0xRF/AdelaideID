@@ -12,7 +12,7 @@ import router from "./router";
         <router-link
             v-if="router.currentRoute.value.path != '/settings'"
             to="/settings"
-            ><img src="/assets/cog.svg" alt="Settings icon"
+            ><img src="/assets/cog.svg" alt="Settings icon" style="pointer: cursor;"
         /></router-link>
     </header>
 

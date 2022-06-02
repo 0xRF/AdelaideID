@@ -3,23 +3,26 @@
         <p>Manually add students without ID cards to follow-up with later.</p>
         <div class="manual-add-name">
             <div>
-                <label><b>First Name</b></label>
-                <input type="text">
+                <label for="first-name-input"><b>First Name</b></label>
+                <input id="first-name-input" type="text">
             </div>
             <div>
-                <label><b>Last Name</b></label>
-                <input type="text">
+                <label for="last-name-input"><b>Last Name</b></label>
+                <input id="last-name-input" type="text">
             </div>
         </div>
         <div>
-            <label><b>Student ID (optional)</b></label>
-            <input type="text">
+            <label for="student-id-input"><b>Student ID (optional)</b></label>
+            <input id="student-id-input" type="text">
             <!-- <img src="/assets/pencil-alt.svg" alt="Image icon"> -->
         </div>
         <div>
             <label><b>Image</b></label>
-            <!-- <img src="/assets/camera.svg" alt="Image icon"> -->
-            <input class="image-upload-prompt" type="file" accept="image/png, image/jpeg">
+            <input id="hidden-image-upload" type="file" accept="image/*" capture="environment" hidden>
+            <label for="hidden-image-upload" class="image-upload-prompt">
+                <img src="/assets/camera.svg" alt="Image icon">
+                <p>Add Student Photo</p>
+            </label>
         </div>
         <div class="confirmation-buttons">
             <button class="confirmation-cancel">
@@ -64,6 +67,15 @@ label {
 .image-upload-prompt {
     background-color: #E5E5E5;
     height: 128px;
+    box-shadow: 0px 2px 8px rgba(99, 99, 99, 0.2);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.image-upload-prompt img {
+    width: 48px;
+    height: 48px;
 }
 
 .confirmation-buttons {

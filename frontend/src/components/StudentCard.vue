@@ -1,3 +1,26 @@
+<script setup>
+import { ref } from "vue";
+
+defineProps({
+    firstName: {
+        type: String,
+        default: "unavailable",
+    },
+    lastName: {
+        type: String,
+        default: "unavailable",
+    },
+    studentID: {
+        type: String,
+        default: "unavailable",
+    },
+    studentPhoto: {
+        type: String,
+        default: "",
+    },
+});
+</script>
+
 <template>
     <div class="id-card">
         <div class="id-card-top">
@@ -7,15 +30,15 @@
         <div class="id-card-main">
             <p class="id-details">
                 <span>First Name:</span><br>
-                <b>Jimmy</b><br><br>
+                <b>{{ firstName }}</b><br><br>
 
                 <span>Last Name:</span><br>
-                <b>Wafting</b><br><br>
+                <b>{{ lastName }}</b><br><br>
                 
                 <span>Student ID:</span><br>
-                <b>182019</b>
+                <b>{{ studentID }}</b>
             </p>
-            <img class="id-photo" src="" />
+            <img class="id-photo" src="{{ studentPhoto }}" />
         </div>
     </div>
 </template>

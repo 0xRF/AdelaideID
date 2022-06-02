@@ -8,7 +8,10 @@ import StreamBarcodeReader from "../components/StreamBarcodeReader.vue";
         <StreamBarcodeReader @decode="onDecode"></StreamBarcodeReader>
         <div class="scan-idle-options">
             <p class="scan-idle-hint">Scan barcode on the back of student ID card</p>
-            <button class="manual-add"><img src="/assets/plus-circle.svg" alt="Settings icon">Add Manually</button>
+            <button class="manual-add">
+                <img src="/assets/plus-circle.svg" alt="Settings icon">
+                <p>Add Manually</p>
+            </button>
         </div>
         <!-- <div class="scan-fail-options">
             <button class="scan-fail-message">
@@ -41,6 +44,8 @@ header {
 }
 
 .manual-add {
+    display: flex;
+    align-items: row;
     width: 162px;
     height: 42px;
 
@@ -52,6 +57,16 @@ header {
 .manual-add img {
     height: 28px;
     width: 28px;
+    margin: 8px;
+}
+
+.manual-add p {
+    height: 42px;
+    width: 28px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex: 1;
 }
 
 .scan-idle-hint {
