@@ -1,6 +1,13 @@
 <script setup>
 import StreamBarcodeReader from "../components/StreamBarcodeReader.vue";
 
+const studentObject = ref({});
+const onDecode = async (result) => {
+    studentId.value = result;
+    let res = await fetch("/api/session");
+    let body = await res.json();
+}
+
 </script>
 
 <template>
@@ -13,12 +20,12 @@ import StreamBarcodeReader from "../components/StreamBarcodeReader.vue";
                 <p>Add Manually</p>
             </button>
         </div>
-        <!-- <div class="scan-fail-options">
+        <div v-if= class="scan-fail-options">
             <button class="scan-fail-message">
                 <img src="/assets/x-circle.svg" alt="Back arrow"/>
                 <b>Cannot Confirm<br>Already Marked Present</b>
             </button>
-        </div> -->
+        </div>
     </div>
 </template>
 

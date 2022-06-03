@@ -29,14 +29,12 @@ async function addAssignment(assignment_id, course_id) {
     con.release();
 };
 
-
 async function getAssignments() {
     let con = await getConnection();
     let [rows, _fields] = await con.query('SELECT * FROM Assignments');
     con.release();
     return rows;
 };
-
 
 async function getStudent(studentId) {
     let con = await getConnection();

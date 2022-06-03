@@ -50,6 +50,17 @@ app.get("/api/courses", async (req, res) => {
     }
 })
 
+app.get("/api/self", async (req, res) => {
+    try {
+        let courses = await canvas.getSelf();
+        res.send(courses);
+    } catch (e) {
+        console.error(e);
+        res.sendStatus(400);
+    }
+})
+
+
 app.get("/api/assignments", async (req, res) => {
     try {
         let assignments = await db.getAssignments();
