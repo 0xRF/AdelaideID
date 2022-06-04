@@ -40,6 +40,29 @@ app.post("/api/authenticate", async (req, res) => {
     }
 })
 
+
+app.get("/api/student", async (req, res) => {
+    try {
+        let student = await canvas.getStudentInfo(req.query.studentId, req.query.courseId);
+        res.send(student);
+    } catch (e) {
+        console.error(e);
+        res.sendStatus(400);
+    }
+})
+
+
+app.get("/api/self", async (req, res) => {
+    try {
+        let courses = await canvas.getSelf();
+        res.send(courses);
+    } catch (e) {
+        console.error(e);
+        res.sendStatus(400);
+    }
+})
+
+
 app.get("/api/courses", async (req, res) => {
     try {
         let courses = await canvas.getCourses();
@@ -49,6 +72,8 @@ app.get("/api/courses", async (req, res) => {
         res.sendStatus(400);
     }
 })
+
+
 
 app.get("/api/self", async (req, res) => {
     try {
