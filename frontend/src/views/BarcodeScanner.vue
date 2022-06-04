@@ -1,86 +1,70 @@
 <script setup>
 import StreamBarcodeReader from "../components/StreamBarcodeReader.vue";
+import { ref } from "vue";
 
-const studentObject = ref({});
+const student = ref({});
+const failed = ref(false);
 const onDecode = async (result) => {
-    studentId.value = result;
-    let res = await fetch("/api/session");
-    let body = await res.json();
-}
-
+    try {
+        let res = await fetch("/api/student");
+        let body = await res.json();
+        student.value = body;
+    } catch (ignore) {
+        failed.value = true;
+        setTimeout(() => (failed.value = false), 1000);
+    }
+};
 </script>
 
 <template>
     <div>
         <StreamBarcodeReader @decode="onDecode"></StreamBarcodeReader>
         <div class="scan-idle-options">
-            <p class="scan-idle-hint">Scan barcode on the back of student ID card</p>
+            <p class="scan-idle-hint">
+                Scan barcode on the back of student ID card
+            </p>
             <button class="manual-add">
-                <img src="/assets/plus-circle.svg" alt="Settings icon">
-                <p>Add Manually</p>
+                <img
+                    class="icon"
+                    src="/assets/plus-circle.svg"
+                    alt="Settings icon"
+                />
+                <span>Add Manually</span>
             </button>
         </div>
-        <div v-if= class="scan-fail-options">
+        <div v-if="failed" class="scan-fail-options">
             <button class="scan-fail-message">
-                <img src="/assets/x-circle.svg" alt="Back arrow"/>
-                <b>Cannot Confirm<br>Already Marked Present</b>
+                <img src="/assets/x-circle.svg" alt="Back arrow" />
+                <b>Cannot Confirm<br />Already Marked Present</b>
             </button>
         </div>
     </div>
 </template>
 
 <style>
-#app {
-    background-color: #363636;
-    color: white;
-}
-
-header {
-    background-color: transparent;
-}
-
 .scan-idle-options {
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 28px;
     bottom: 0;
     width: 100%;
-    height: 166px;
     padding: 28px;
 }
 
 .manual-add {
+    padding: 8px 16px;
+    gap: 8px;
     display: flex;
-    align-items: row;
-    width: 162px;
-    height: 42px;
-
-    background: #FFFFFF;
     box-shadow: 0px 2px 8px rgba(99, 99, 99, 0.2);
     border-radius: 20px;
-}
-
-.manual-add img {
-    height: 28px;
-    width: 28px;
-    margin: 8px;
-}
-
-.manual-add p {
-    height: 42px;
-    width: 28px;
     align-items: center;
-    justify-content: center;
-    display: flex;
-    flex: 1;
 }
 
 .scan-idle-hint {
-    height: 40px;
     max-width: 200px;
     text-align: center;
-    margin-bottom: 28px;
 }
 
 /* .scan-fail-options {
@@ -116,5 +100,4 @@ header {
     align-items: center;
     text-align: center;
 } */
-
 </style>

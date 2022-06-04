@@ -3,7 +3,8 @@ import { nextTick } from "vue";
 
 import DebugPage from "./views/DebugPage.vue";
 
-const routes = [{
+const routes = [
+    {
         path: "/",
         name: "Home",
         component: DebugPage,
@@ -11,29 +12,31 @@ const routes = [{
     {
         path: "/settings",
         name: "Settings",
-        component: () =>
-            import ("./views/SettingsPage.vue"),
+        component: () => import("./views/SettingsPage.vue"),
     },
     {
         path: "/scan",
         name: "Scanner",
         meta: {
             fullscreen: true,
+            invert: true,
         },
-        component: () =>
-            import ("./views/BarcodeScanner.vue"),
+        component: () => import("./views/BarcodeScanner.vue"),
     },
     {
         path: "/add",
         name: "Manual Add",
-        component: () =>
-            import ("./views/AddPage.vue"),
+        component: () => import("./views/AddPage.vue"),
     },
     {
         path: "/register",
         name: "Registration",
-        component: () =>
-            import ("./views/RegisterPage.vue"),
+        component: () => import("./views/RegisterPage.vue"),
+    },
+    {
+        path: "/login",
+        name: "Log in",
+        component: () => import("./views/LoginPage.vue"),
     },
 ];
 
@@ -41,8 +44,7 @@ const router = createRouter({
     scrollBehavior() {
         return { left: 0, top: 0 };
     },
-    history: createWebHistory(
-        import.meta.env.BASE_URL),
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes,
 });
 

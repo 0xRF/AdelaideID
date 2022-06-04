@@ -54,7 +54,7 @@ getSession();
 
 <template>
     <div>
-        <StudentCard/>
+        <StudentCard />
 
         <div v-if="loaded" id="debug">
             <p>Session: {{ session }}</p>
@@ -78,8 +78,8 @@ getSession();
         </div>
         <p v-else>connecting to backend...</p>
         <p>{{ studentId }}</p>
-        <ClassCard/>
-        <ConfirmationPopup/>
+        <ClassCard />
+        <ConfirmationPopup />
     </div>
 </template>
 

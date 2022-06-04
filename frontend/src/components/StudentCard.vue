@@ -29,13 +29,15 @@ defineProps({
 
         <div class="id-card-main">
             <p class="id-details">
-                <span>First Name:</span><br>
-                <b>{{ firstName }}</b><br><br>
+                <span>First Name:</span><br />
+                <b>{{ firstName }}</b
+                ><br /><br />
 
-                <span>Last Name:</span><br>
-                <b>{{ lastName }}</b><br><br>
-                
-                <span>Student ID:</span><br>
+                <span>Last Name:</span><br />
+                <b>{{ lastName }}</b
+                ><br /><br />
+
+                <span>Student ID:</span><br />
                 <b>{{ studentID }}</b>
             </p>
             <img class="id-photo" src="{{ studentPhoto }}" />
@@ -53,7 +55,7 @@ defineProps({
 .id-card-top {
     height: 48px;
 
-    background: #141D2B;
+    background: #141d2b;
     border-radius: 5px 5px 0px 0px;
 
     border-bottom: 2px solid hsl(0, 100%, 42%);
@@ -83,6 +85,6 @@ defineProps({
     flex: 1;
     width: 124px;
     height: 176px;
-    background-color: #E5E5E5;
+    background-color: #e5e5e5;
 }
 </style>

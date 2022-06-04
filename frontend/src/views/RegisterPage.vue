@@ -1,72 +1,97 @@
+<script setup>
+import { ref } from "vue";
+import router from "../router";
+const username = ref("");
+const password = ref("");
+const confirmPassword = ref("");
+const bearerToken = ref("");
+
+const submitting = ref(false);
+
+const register = async () => {
+    submitting.value = true;
+    let res = await fetch("/api/register", {
+        method: "post",
+        body: JSON.stringify({
+            username,
+            password,
+            canvas_token: bearerToken,
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    submitting.value = false;
+    if (res.status == 200) router.replace("/");
+};
+</script>
+
 <template>
-    <div class="manual-add-page">
-        <p>Create an account for Adelaide ID here. Avoid re-using your MyUni passord.</p>
+    <div class="registration">
+        <p>
+            Create an account for Adelaide ID here. Avoid re-using your MyUni
+            password.
+        </p>
         <div>
             <label><b>Staff / Student ID</b></label>
-            <input type="text">
+            <input
+                v-model="username"
+                type="text"
+                placeholder="a1234567"
+                :disabled="submitting"
+            />
         </div>
         <div>
             <label><b>Password</b></label>
-            <input type="text">
+            <input v-model="password" type="password" :disabled="submitting" />
         </div>
         <div>
             <label><b>Confirm Password</b></label>
-            <input type="text">
+            <input
+                v-model="confirmPassword"
+                type="password"
+                :disabled="submitting"
+            />
         </div>
         <div>
-            <label><b>Canvas Bearer Token</b></label>
-            <p>Head over to your <a href="https://myuni.adelaide.edu.au/profile/settings">MyUni Settings</a> and under 'approved integrations' select 'new access token' to generate your bearer token.</p>
-            <input type="text">
+            <label
+                ><b>Canvas Bearer Token</b><br />
+                <span
+                    >Head over to your
+                    <a
+                        href="https://myuni.adelaide.edu.au/profile/settings"
+                        target="_blank"
+                        >MyUni Settings</a
+                    >
+                    and under <i>approved integrations</i> select
+                    <b>new access token</b> to generate your bearer token.</span
+                ></label
+            >
+            <input
+                v-model="bearerToken"
+                type="text"
+                placeholder="7036~XXXXXXXXXXXX"
+                :disabled="submitting"
+            />
         </div>
+        <div class="spacer" />
         <div class="confirmation-buttons">
-            <button class="confirmation-cancel">
-                <img src="/assets/x-circle.svg" alt="Back arrow"/>
-                <p>Cancel</p>
-            </button>
-            <button class="confirmation-confirm">
-                <img src="/assets/check-circle.svg" alt="Back arrow"/>
-                <p>Confirm</p>
+            <button
+                class="confirmation-confirm"
+                :disabled="submitting"
+                @click="register"
+            >
+                <img src="/assets/check-circle.svg" alt="Back arrow" />
+                <p>Register</p>
             </button>
         </div>
     </div>
 </template>
 
 <style scoped>
-.manual-add-page {
+.registration {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    min-height: 100%;
-}
-
-.manual-add-name {
-    display: flex;
-    gap: 16px;
-}
-
-.manual-add-name div {
-    flex: 1;
-}
-
-input {
-    width: 100%;
-}
-
-label {
-    height: 32px;
-    display: flex;
-    align-items: center;
-}
-
-.image-upload-prompt {
-    background-color: #E5E5E5;
-    height: 128px;
-}
-
-.confirmation-buttons {
-    flex: 1;
-}
-.confirmation-buttons button {
-    margin-top: auto;
 }
 </style>

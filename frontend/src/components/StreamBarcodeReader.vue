@@ -2,10 +2,13 @@
     <div class="scanner-container">
         <div class="overlay-element"></div>
         <div class="overlay-corners"></div>
-        <video v-show="!isLoading" poster="data:image/gif,AAAA" ref="scanner"></video>
+        <video
+            v-show="!isLoading"
+            ref="scanner"
+            poster="data:image/gif,AAAA"
+        ></video>
     </div>
 </template>
-
 
 <script>
 // Using code from https://github.com/olefirenko/vue-barcode-reader
@@ -13,7 +16,7 @@
 import { BrowserMultiFormatReader, Exception } from "@zxing/library";
 
 export default {
-    name: "stream-barcode-reader",
+    name: "StreamBarcodeReader",
 
     data() {
         return {
@@ -22,7 +25,7 @@ export default {
             isMediaStreamAPISupported:
                 navigator &&
                 navigator.mediaDevices &&
-                "enumerateDevices" in navigator.mediaDevices
+                "enumerateDevices" in navigator.mediaDevices,
         };
     },
 
@@ -32,7 +35,7 @@ export default {
         }
 
         this.start();
-        this.$refs.scanner.oncanplay = event => {
+        this.$refs.scanner.oncanplay = (event) => {
             this.isLoading = false;
             this.$emit("loaded");
         };
@@ -53,8 +56,8 @@ export default {
                     }
                 }
             );
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -67,55 +70,65 @@ export default {
     justify-content: center;
     height: 100%;
     width: 100%;
-    position: absolute;
+    background-color: grey;
 }
 
 video {
     width: 100%;
-    max-height: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .overlay-element {
     position: absolute;
-    top: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background: rgba(0, 0, 0, 0.5);
 
     clip-path: polygon(
-        0%                  0%, 
-        0%                  100%, 
-        28px                100%,
-        28px                calc(50% - (50vw - 28px)),
-        calc(100% - 28px)   calc(50% - (50vw - 28px)),
-        calc(100% - 28px)   calc(50% + (50vw - 28px)), 
-        28px                calc(50% + (50vw - 28px)),
-        28px                100%,
-        100%                100%,
-        100%                0% 
+        0% 0%,
+        0% 100%,
+        28px 100%,
+        28px calc(50% - (50vw - 28px)),
+        calc(100% - 28px) calc(50% - (50vw - 28px)),
+        calc(100% - 28px) calc(50% + (50vw - 28px)),
+        28px calc(50% + (50vw - 28px)),
+        28px 100%,
+        100% 100%,
+        100% 0%
     );
 }
 
-
 .overlay-corners {
-    /* based on https://stackoverflow.com/questions/14387690/how-can-i-show-only-corner-borders */ 
+    /* based on https://stackoverflow.com/questions/14387690/how-can-i-show-only-corner-borders */
     position: absolute;
     width: calc(100% - 56px + 6px);
     height: calc(100vw - 56px + 6px);
 
-    left: 0; 
-    right: 0; 
-    margin: 0 auto; 
+    left: 0;
+    right: 0;
+    margin: 0 auto;
 
-    background:
-    linear-gradient(to right, var(--outline-color) 3px, transparent 3px) 0 0,
-    linear-gradient(to right, var(--outline-color) 3px, transparent 3px) 0 100%,
-    linear-gradient(to left, var(--outline-color) 3px, transparent 3px) 100% 0,
-    linear-gradient(to left, var(--outline-color) 3px, transparent 3px) 100% 100%,
-    linear-gradient(to bottom, var(--outline-color) 3px, transparent 3px) 0 0,
-    linear-gradient(to bottom, var(--outline-color) 3px, transparent 3px) 100% 0,
-    linear-gradient(to top, var(--outline-color) 3px, transparent 3px) 0 100%,
-    linear-gradient(to top, var(--outline-color) 3px, transparent 3px) 100% 100%;
+    background: linear-gradient(
+                to right,
+                var(--outline-color) 3px,
+                transparent 3px
+            )
+            0 0,
+        linear-gradient(to right, var(--outline-color) 3px, transparent 3px) 0
+            100%,
+        linear-gradient(to left, var(--outline-color) 3px, transparent 3px) 100%
+            0,
+        linear-gradient(to left, var(--outline-color) 3px, transparent 3px) 100%
+            100%,
+        linear-gradient(to bottom, var(--outline-color) 3px, transparent 3px) 0
+            0,
+        linear-gradient(to bottom, var(--outline-color) 3px, transparent 3px)
+            100% 0,
+        linear-gradient(to top, var(--outline-color) 3px, transparent 3px) 0
+            100%,
+        linear-gradient(to top, var(--outline-color) 3px, transparent 3px) 100%
+            100%;
 
     /* linear-gradient(to right, purple 3px, transparent 3px)  28px                calc(50vw - 14px),
     linear-gradient(to right, blue 3px, transparent 3px)    28px                calc(100% - (50vw - 14px)),
