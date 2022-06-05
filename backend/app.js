@@ -40,17 +40,15 @@ app.post("/api/authenticate", async (req, res) => {
     }
 })
 
-
 app.get("/api/student", async (req, res) => {
     try {
-        let student = await canvas.getStudentInfo(req.query.studentId, req.query.courseId);
+        let student = await db.getStudent(req.query.studentId);
         res.send(student);
     } catch (e) {
         console.error(e);
         res.sendStatus(400);
     }
 })
-
 
 app.get("/api/self", async (req, res) => {
     try {

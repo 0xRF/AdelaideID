@@ -40,7 +40,7 @@ defineProps({
                 <span>Student ID:</span><br />
                 <b>{{ studentID }}</b>
             </p>
-            <img class="id-photo" src="{{ studentPhoto }}" />
+            <img class="id-photo" :src="studentPhoto" />
         </div>
     </div>
 </template>
