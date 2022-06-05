@@ -12,7 +12,7 @@ const token = ref("");
 const loaded = ref(false);
 const authenticated = ref(false);
 
-const student= ref("waiting for student...");
+const student = ref("waiting for student...");
 const studentId = ref("waiting for student id...");
 
 const onDecode = (result) => {
@@ -63,27 +63,27 @@ const getSelf = async () => {
     self.value = await res.json();
 };
 
-
-
 const getStudent = async () => {
     console.log("getting student...");
-    
-    let res = await fetch("/api/student?" + new URLSearchParams({
-        studentId: '1799828',
-    }));
+
+    let res = await fetch(
+        "/api/student?" +
+            new URLSearchParams({
+                studentId: "1799828",
+            })
+    );
     student.value = await res.json();
 };
 
 getSession();
-
 </script>
 
 <template>
     <div>
-        <StudentCard 
+        <StudentCard
             v-bind:firstName="student.first_name"
             v-bind:lastName="student.last_name"
-            v-bind:studentPhoto="student.photo_path" 
+            v-bind:studentPhoto="student.photo_path"
         />
 
         <div v-if="loaded" id="debug">

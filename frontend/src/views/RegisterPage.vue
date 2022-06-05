@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import router from "../router";
 const username = ref("");
 const password = ref("");
@@ -10,11 +10,12 @@ const submitting = ref(false);
 
 const register = async () => {
     submitting.value = true;
+
     let res = await fetch("/api/register", {
         method: "post",
         body: JSON.stringify({
-            username,
-            password,
+            username: username.value,
+            password: password.value,
             canvas_token: bearerToken,
         }),
         headers: {
@@ -24,6 +25,14 @@ const register = async () => {
     submitting.value = false;
     if (res.status == 200) router.replace("/");
 };
+
+const isFormValid = computed(
+    () =>
+        username.value.length == 8 &&
+        bearerToken.value != "" &&
+        password.value.length >= 8 &&
+        password.value == confirmPassword.value
+);
 </script>
 
 <template>
@@ -78,7 +87,7 @@ const register = async () => {
         <div class="confirmation-buttons">
             <button
                 class="confirmation-confirm"
-                :disabled="submitting"
+                :disabled="submitting || !isFormValid"
                 @click="register"
             >
                 <img src="/assets/check-circle.svg" alt="Back arrow" />

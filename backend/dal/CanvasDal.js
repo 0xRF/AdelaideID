@@ -8,11 +8,11 @@ console.log('Canvas Module Loaded');
 console.log(`Bearer Token ${BEARER_TOKEN}`);
 
 //TODO map or only return the fields we actually use or need
-async function getSelf() {
+async function getSelf(bearer_token) {
     let userInfo = await axios.get(CANVAS_ENDPOINT + "users/self",
         {
             headers: {
-                "Authorization": `Bearer ${BEARER_TOKEN}`
+                "Authorization": `Bearer ${bearer_token}`
             }
         });
     return userInfo.data;
@@ -29,11 +29,11 @@ async function getStudentInfo(student_id, course_id) {
 };
 
 
-async function getCourses() {
+async function getCourses(bearer_token) {
     let courses = await axios.get(CANVAS_ENDPOINT + "courses",
         {
             headers: {
-                "Authorization": `Bearer ${BEARER_TOKEN}`
+                "Authorization": `Bearer ${bearer_token}`
             }
         });
 
@@ -50,11 +50,11 @@ async function getCourses() {
     }))
 };
 
-async function getAssignments(course_id) {
+async function getAssignments(course_id, bearer_token) {
     let assignments = await axios.get(`${CANVAS_ENDPOINT}courses/${course_id}/assignments`,
         {
             headers: {
-                "Authorization": `Bearer ${BEARER_TOKEN}`
+                "Authorization": `Bearer ${bearer_token}`
             }
         });
 

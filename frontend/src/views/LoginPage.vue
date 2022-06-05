@@ -11,8 +11,8 @@ const login = async () => {
     let res = await fetch("/api/login", {
         method: "post",
         body: JSON.stringify({
-            username,
-            password,
+            username: username.value,
+            password: password.value,
         }),
         headers: {
             "Content-Type": "application/json",

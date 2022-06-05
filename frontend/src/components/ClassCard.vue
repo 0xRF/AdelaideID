@@ -1,7 +1,11 @@
 <script setup>
 import { ref } from "vue";
 
-defineProps({
+let props = defineProps({
+    id: {
+        type: String,
+        default: "",
+    },
     title: {
         type: String,
         default: "",
@@ -13,6 +17,10 @@ defineProps({
 });
 
 const colour = ref(`background-color: hsl(${0}, 100%, 90%)`);
+
+const openMyUni = () => {
+    window.open("https://myuni.adelaide.edu.au/courses/" + props.id);
+};
 </script>
 
 <template>
@@ -28,7 +36,7 @@ const colour = ref(`background-color: hsl(${0}, 100%, 90%)`);
             </div>
         </div>
         <div class="navigation">
-            <button style="flex-grow: 1">
+            <button style="flex-grow: 1" @click="openMyUni">
                 <img src="/assets/external-link.svg" />
                 <p>MyUni</p>
             </button>

@@ -56,9 +56,50 @@ async function addStudent(courseId, assignmentId, studentId, userId) {
     con.release();
 };
 
+async function addUser(firstName, lastName, username, bearerToken, passwordHash) {
+    // check if user exists
+    let con = await getConnection();
+    let [rows, _fields] = await con.query('SELECT * FROM Users WHERE username = ?', [username]);
+
+
+    if (rows.length != 0) {
+        console.log('Unable to register, user already exists');
+        con.release();
+
+        throw { name: "AlreadyExistsError", message: "Unable to register, user already exists." };
+    }
+
+    await con.query('INSERT INTO Users (first_name, last_name, username, canvas_token, password_hash) VALUES (?, ?, ?, ?, ?)', [firstName, lastName, username, bearerToken, passwordHash]);
+    console.log('Registering a new user');
+
+    let id;
+    [id, _fields] = await con.query('SELECT user_id FROM Users WHERE username = ?', [username]);
+
+    con.release();
+
+    return id[0];
+};
+
+async function getUserById(user_id) {
+    let con = await getConnection();
+    let [rows, _fields] = await con.query('SELECT * FROM Users WHERE user_id = ?', [user_id]);
+    con.release();
+    return rows[0];
+};
+
+async function getUserByName(username) {
+    let con = await getConnection();
+    let [rows, _fields] = await con.query('SELECT * FROM Users WHERE username = ?', [username]);
+    con.release();
+    return rows[0];
+};
+
 module.exports = {
     addAssignment,
     getAssignments,
     addStudent,
-    getStudent
+    getStudent,
+    addUser,
+    getUserById,
+    getUserByName
 }

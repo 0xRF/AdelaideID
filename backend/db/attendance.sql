@@ -22,8 +22,10 @@ CREATE TABLE Assignments(
 CREATE TABLE Users(
     user_id int AUTO_INCREMENT PRIMARY KEY NOT NULL,
     canvas_token varchar(255) NOT NULL,
+    username varchar(255) NOT NULL,
     first_name varchar(255) NOT NULL,
     last_name varchar(255) NOT NULL
+    password_hash varchar(255) NOT NULL,
 );
 
 CREATE TABLE Attendance_records(

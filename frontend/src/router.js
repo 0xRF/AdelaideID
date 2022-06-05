@@ -2,11 +2,23 @@ import { createRouter, createWebHistory } from "vue-router";
 import { nextTick } from "vue";
 
 import DebugPage from "./views/DebugPage.vue";
+import CoursePage from "./views/CoursePage.vue";
+import ClassPage from "./views/ClassPage.vue";
 
 const routes = [
     {
         path: "/",
         name: "Home",
+        component: CoursePage,
+    },
+    {
+        path: "/class/:id",
+        name: "Classes",
+        component: ClassPage,
+    },
+    {
+        path: "/debug",
+        name: "Debug",
         component: DebugPage,
     },
     {
