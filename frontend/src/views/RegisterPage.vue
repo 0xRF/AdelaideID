@@ -91,7 +91,6 @@ const isFormValid = computed(
                 @click="register"
             >
                 <img src="/assets/check-circle.svg" alt="Back arrow" />
-                <a href="./login"></a>
                 <p>Register</p>
             </button>
         </div>
