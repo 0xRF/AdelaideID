@@ -129,16 +129,7 @@ video {
             100%,
         linear-gradient(to top, var(--outline-color) 3px, transparent 3px) 100%
             100%;
-
-    /* linear-gradient(to right, purple 3px, transparent 3px)  28px                calc(50vw - 14px),
-    linear-gradient(to right, blue 3px, transparent 3px)    28px                calc(100% - (50vw - 14px)),
-    linear-gradient(to left, red 3px, transparent 3px)      calc(100% - 28px)   calc(50vw - 14px),
-    linear-gradient(to left, green 3px, transparent 3px)    calc(100% - 28px)   calc(100% - (50vw - 14px)),
-    linear-gradient(to bottom, yellow 3px, transparent 3px) 28px                calc(50vw - 14px),
-    linear-gradient(to bottom, orange 3px, transparent 3px) calc(100% - 28px)   calc(50vw - 14px),
-    linear-gradient(to top, pink 3px, transparent 3px)      calc(100% - 28px)   calc(100% - (50vw - 14px)),
-    linear-gradient(to top, white 3px, transparent 3px)     28px                calc(100% - (50vw - 14px)); */
-
+    
     background-repeat: no-repeat;
     background-size: 28px 28px;
 }

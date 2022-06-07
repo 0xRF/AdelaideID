@@ -1,17 +1,35 @@
 <script setup>
 import StreamBarcodeReader from "../components/StreamBarcodeReader.vue";
+import StudentCard from "../components/StudentCard.vue";
+import ConfirmationPopup from "../components/ConfirmationPopup.vue";
+
 import { ref } from "vue";
 
 const student = ref({});
 const failed = ref(false);
+const success = ref(false);
 const onDecode = async (result) => {
     try {
-        let res = await fetch("/api/student");
+
+        if (result.length != 7) {
+            throw { name: "InvalidBarcodeError", message: "Invalid Barcode." };
+        }
+
+        success.value = true;
+
+        let res = await fetch("/api/student?studentId=" + result);
         let body = await res.json();
+
+        if (!body) {
+            throw { name: "InvalidBarcodeError", message: "Unable to fetch student details." };
+        }
+
+        failed.value = false;
+
         student.value = body;
     } catch (ignore) {
         failed.value = true;
-        setTimeout(() => (failed.value = false), 1000);
+        // setTimeout(() => (failed.value = false), 1000);
     }
 };
 </script>
@@ -19,7 +37,11 @@ const onDecode = async (result) => {
 <template>
     <div>
         <StreamBarcodeReader @decode="onDecode"></StreamBarcodeReader>
-        <div class="scan-idle-options">
+
+        <StudentCard v-if="success" class="student-card" :firstName="student.first_name" :lastName="student.last_name" :studentID="student.student_id" :studentPhoto="student.photo_path" />
+        <ConfirmationPopup v-if="success" :name="student.first_name" class="confirmation-popup" />
+
+        <div v-if="!failed" class="scan-idle-options">
             <p class="scan-idle-hint">
                 Scan barcode on the back of student ID card
             </p>
@@ -32,7 +54,7 @@ const onDecode = async (result) => {
                 <span>Add Manually</span>
             </button>
         </div>
-        <div v-if="failed" class="scan-fail-options">
+        <div v-else class="scan-fail-options">
             <button class="scan-fail-message">
                 <img src="/assets/x-circle.svg" alt="Back arrow" />
                 <b>Cannot Confirm<br />Already Marked Present</b>
@@ -67,7 +89,13 @@ const onDecode = async (result) => {
     text-align: center;
 }
 
-/* .scan-fail-options {
+.student-card {
+    position: absolute;
+    top: 0;
+    z-index: 100;
+}
+
+.scan-fail-options {
     position: absolute;
     bottom: 28px;
     width: 100%;
@@ -99,5 +127,5 @@ const onDecode = async (result) => {
     display: flex;
     align-items: center;
     text-align: center;
-} */
+}
 </style>

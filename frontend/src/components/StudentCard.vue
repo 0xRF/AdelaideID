@@ -48,8 +48,12 @@ defineProps({
 <style scoped>
 .id-card {
     height: 256px;
+    width: calc(100% - 56px);
+    margin: 0 28px;
     box-shadow: 0px 2px 8px rgba(99, 99, 99, 0.2);
     border-radius: 5px;
+    background-color: white;
+    color: #363636;
 }
 
 .id-card-top {

@@ -1,16 +1,16 @@
 <script setup>
-// import { ref } from "vue";
+import { ref } from "vue";
 
-// defineProps({
-//     title: {
-//         type: String,
-//         default: "",
-//     },
-//     details: {
-//         type: String,
-//         default: "",
-//     },
-// });
+defineProps({
+    name: {
+        type: String,
+        default: "",
+    },
+    course: {
+        type: String,
+        default: "",
+    },
+});
 </script>
 
 <template>
@@ -22,8 +22,8 @@
 
         <div v-else class="content">
             <p class="confirmation-text">
-                Mark <b>Jimmy</b> as present for
-                <b>Web and Database Computing?</b>
+                Mark <b>{{ name }}</b> as present for
+                <b>{{ course }}</b>
             </p>
             <div class="confirmation-buttons">
                 <button class="confirmation-cancel">
@@ -42,16 +42,20 @@
 <style scoped>
 .confirmation-popup {
     position: fixed;
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
 
     width: 100%;
     height: 192px;
     left: 0;
     bottom: 0;
 
-    background: #ccfff7;
+    color: #363636;
+
+    background-color: #ccfff7;
     border-radius: 20px 20px 0px 0px;
     padding: 32px 28px;
+
+    z-index: 100;
 }
 
 .confirmation-text {
