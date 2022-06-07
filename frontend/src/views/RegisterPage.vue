@@ -85,7 +85,7 @@ const isFormValid = computed(
         </div>
         <div class="spacer" />
         <div class="confirmation-buttons">
-        <router-link to='/LoginPage.vue'>
+        <router-link to='/login'>
             <button
                 class="confirmation-confirm"
                 :disabled="submitting || !isFormValid"
