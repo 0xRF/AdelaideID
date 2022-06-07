@@ -85,7 +85,6 @@ const isFormValid = computed(
         </div>
         <div class="spacer" />
         <div class="confirmation-buttons">
-        <router-link to='/login'>
             <button
                 class="confirmation-confirm"
                 :disabled="submitting || !isFormValid"
@@ -94,7 +93,6 @@ const isFormValid = computed(
                 <img src="/assets/check-circle.svg" alt="Back arrow" />
                 <p>Register</p>
             </button>
-            </router-link>
         </div>
     </div>
 </template>
