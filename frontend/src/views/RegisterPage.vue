@@ -84,6 +84,7 @@ const isFormValid = computed(
             />
         </div>
         <div class="spacer" />
+        <router-link to='/login'>
         <div class="confirmation-buttons">
             <button
                 class="confirmation-confirm"
@@ -94,6 +95,7 @@ const isFormValid = computed(
                 <p>Register</p>
             </button>
         </div>
+        </router-link>
     </div>
 </template>
 
