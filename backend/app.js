@@ -30,7 +30,7 @@ app.post("/api/authenticate", async (req, res) => {
     try {
         let token = req.body.canvas_token;
         console.log(req.body);
-        let userInfo = await canvas.getSelf();
+        let userInfo = await canvas.getSelf(token);
 
         // Temporary storage (this will be moved into database once that is set up)
         req.session.canvasToken = token;
@@ -53,21 +53,10 @@ app.get("/api/student", async (req, res) => {
     }
 })
 
-app.get("/api/self", async (req, res) => {
-    try {
-        let courses = await canvas.getSelf();
-        res.send(courses);
-    } catch (e) {
-        console.error(e);
-        res.sendStatus(400);
-    }
-})
-
 
 app.get("/api/courses", async (req, res) => {
     try {
         let user = await db.getUserById(req.session.userId);
-
         let courses = await canvas.getCourses(user.canvas_token);
         res.send(courses);
     } catch (e) {
@@ -80,7 +69,8 @@ app.get("/api/courses", async (req, res) => {
 
 app.get("/api/self", async (req, res) => {
     try {
-        let courses = await canvas.getSelf();
+        let user = await db.getUserById(req.session.userId);
+        let courses = await canvas.getSelf(user.canvas_token);
         res.send(courses);
     } catch (e) {
         console.error(e);

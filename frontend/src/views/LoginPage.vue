@@ -49,6 +49,14 @@ const login = async () => {
                 <img src="/assets/check-circle.svg" alt="Back arrow" />
                 <span>Log in</span>
             </button>
+            <button
+                class="confirmation-cancel"
+                :disabled="submitting"
+                @click="router.push('register')"
+            >
+                <img src="/assets/check-circle.svg" alt="Back arrow" />
+                <span>Register</span>
+            </button>
         </div>
     </div>
 </template>

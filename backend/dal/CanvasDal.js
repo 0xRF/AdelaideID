@@ -2,10 +2,8 @@ const config = require('config');
 const axios = require("axios").default;
 
 const CANVAS_ENDPOINT = "https://myuni.adelaide.edu.au/api/v1/";
-const BEARER_TOKEN = config.has('canvas_token') ? config.get('canvas_token') : 'NULL';
 
 console.log('Canvas Module Loaded');
-console.log(`Bearer Token ${BEARER_TOKEN}`);
 
 //TODO map or only return the fields we actually use or need
 async function getSelf(bearer_token) {
@@ -18,11 +16,11 @@ async function getSelf(bearer_token) {
     return userInfo.data;
 };
 
-async function getStudentInfo(student_id, course_id) {
+async function getStudentInfo(bearer_token, student_id, course_id) {
     let userInfo = await axios.get(`${CANVAS_ENDPOINT}courses/${course_id}/users/sis_user_id:${student_id}`,
         {
             headers: {
-                "Authorization": `Bearer ${BEARER_TOKEN}`
+                "Authorization": `Bearer ${bearer_token}`
             }
         });
     return userInfo.data;
