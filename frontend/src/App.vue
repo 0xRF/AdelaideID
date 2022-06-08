@@ -19,7 +19,10 @@ const onScroll = (e) => {
         }"
     >
         <a
-            v-if="router.currentRoute.value.path != '/'"
+            v-if="
+                router.currentRoute.value.path != '/' &&
+                router.currentRoute.value.path != '/login'
+            "
             style="cursor: pointer"
             @click="router.back()"
         >

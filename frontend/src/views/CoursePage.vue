@@ -1,20 +1,18 @@
 <script setup>
 import { ref } from "vue";
 import { onMounted } from "vue";
+import ClassCard from "../components/ClassCard.vue";
 
 const courses = ref([]);
 
-import ClassCard from "../components/ClassCard.vue";
-
 onMounted(async () => {
     let res = await fetch("/api/courses");
-
     courses.value = await res.json();
 });
 </script>
 
 <template>
-    <div>
+    <div class="courses">
         <ClassCard
             v-for="course in courses"
             :key="course.id"
@@ -24,3 +22,11 @@ onMounted(async () => {
         />
     </div>
 </template>
+
+<style scoped>
+.courses {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+}
+</style>

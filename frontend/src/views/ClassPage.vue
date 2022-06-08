@@ -2,10 +2,9 @@
 import { ref } from "vue";
 import { onMounted } from "vue";
 import router from "../router";
+import ClassCard from "../components/ClassCard.vue";
 
 const classes = ref([]);
-
-import ClassCard from "../components/ClassCard.vue";
 
 onMounted(async () => {
     let res = await fetch(

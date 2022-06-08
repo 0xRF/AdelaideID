@@ -10,9 +10,10 @@
         "format": "prettier . --write"
     },
     "dependencies": {
+        "@zxing/library": "^0.19.1",
         "vue": "^3.2.25",
         "vue-router": "^4.0.15",
-        "@zxing/library": "^0.19.1"
+        "vuex": "^4.0.2"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^2.3.3",

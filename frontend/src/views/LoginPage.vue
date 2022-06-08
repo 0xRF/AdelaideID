@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import router from "../router";
+import store from "../store";
 const username = ref("");
 const password = ref("");
 
@@ -8,30 +9,27 @@ const submitting = ref(false);
 
 const login = async () => {
     submitting.value = true;
-    let res = await fetch("/api/login", {
-        method: "post",
-        body: JSON.stringify({
+    try {
+        await store.dispatch("login", {
             username: username.value,
             password: password.value,
-        }),
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-    submitting.value = false;
-    if (res.status == 200) router.replace("/");
+        });
+        submitting.value = false;
+        router.replace("/");
+    } catch (e) {
+        // Handle error
+        submitting.value = false;
+    }
 };
 
 const isFormValid = computed(
-    () =>
-        username.value.length == 8 &&
-        password.value >= 8
+    () => username.value.length == 8 && password.value.length >= 8
 );
 </script>
 
 <template>
     <div class="login">
-        <p>Log in to your Adelaide ID  account here.</p>
+        <p>Log in to your Adelaide ID account here.</p>
         <div>
             <label><b>Staff / Student ID</b></label>
             <input

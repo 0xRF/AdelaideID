@@ -26,7 +26,7 @@ app.use(
 app.get("/api/session", (req, res) => {
     let result = {
         "session": req.sessionID,
-        "authenticated": req.session.canvasToken !== undefined
+        "authenticated": req.session.userId !== undefined
     }
     res.send(result);
 })
@@ -34,7 +34,6 @@ app.get("/api/session", (req, res) => {
 app.post("/api/authenticate", async (req, res) => {
     try {
         let token = req.body.canvas_token;
-        console.log(req.body);
         let userInfo = await canvas.getSelf(token);
 
         // Temporary storage (this will be moved into database once that is set up)
@@ -105,7 +104,6 @@ app.post("/api/register", async (req, res) => {
     try {
         // get name based on student ID
         let token = req.body.canvas_token;
-
         let userInfo = await canvas.getSelf(token);
 
         let [last_name, first_name] = userInfo.sortable_name.split(", ");
@@ -162,6 +160,11 @@ app.post("/api/login", async (req, res) => {
             res.sendStatus(400);
         }
     }
+})
+
+app.get("/api/logout", (req, res) => {
+    delete req.session.userId;
+    res.sendStatus(200);
 })
 
 

@@ -8,7 +8,7 @@ const bearerToken = ref("");
 
 const submitting = ref(false);
 
-const login = async () => {
+const register = async () => {
     submitting.value = true;
 
     let res = await fetch("/api/register", {
@@ -16,14 +16,14 @@ const login = async () => {
         body: JSON.stringify({
             username: username.value,
             password: password.value,
-            canvas_token: bearerToken,
+            canvas_token: bearerToken.value,
         }),
         headers: {
             "Content-Type": "application/json",
         },
     });
     submitting.value = false;
-    if (res.status == 200) router.replace("/");
+    if (res.status == 200) router.replace("/login");
 };
 
 const isFormValid = computed(

@@ -1,6 +1,6 @@
 <template>
     <div class="scanner-container">
-        <div v-if="!blur"  class="overlay-element"></div>
+        <div v-if="!blur" class="overlay-element"></div>
         <div v-if="!blur" class="overlay-corners"></div>
         <video
             :class="{ 'video-blur': blur }"
@@ -19,9 +19,7 @@ import { BrowserMultiFormatReader, Exception } from "@zxing/library";
 export default {
     name: "StreamBarcodeReader",
 
-    props: [
-        'blur'
-    ],
+    props: ["blur"],
     data() {
         return {
             isLoading: false,
@@ -133,7 +131,7 @@ video {
             100%,
         linear-gradient(to top, var(--outline-color) 3px, transparent 3px) 100%
             100%;
-    
+
     background-repeat: no-repeat;
     background-size: 28px 28px;
 }

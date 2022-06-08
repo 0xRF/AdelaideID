@@ -1,25 +1,30 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { nextTick } from "vue";
+import store from "./store";
 
-import DebugPage from "./views/DebugPage.vue";
 import CoursePage from "./views/CoursePage.vue";
-import ClassPage from "./views/ClassPage.vue";
 
 const routes = [
     {
         path: "/",
         name: "Home",
         component: CoursePage,
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/class/:id",
         name: "Classes",
-        component: ClassPage,
+        component: () => import("./views/ClassPage.vue"),
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/debug",
         name: "Debug",
-        component: DebugPage,
+        component: () => import("./views/DebugPage.vue"),
     },
     {
         path: "/settings",
@@ -29,16 +34,20 @@ const routes = [
     {
         path: "/scan",
         name: "Scanner",
+        component: () => import("./views/BarcodeScanner.vue"),
         meta: {
             fullscreen: true,
             invert: true,
+            requiresAuth: true,
         },
-        component: () => import("./views/BarcodeScanner.vue"),
     },
     {
         path: "/add",
         name: "Manual Add",
         component: () => import("./views/AddPage.vue"),
+        meta: {
+            requiresAuth: true,
+        },
     },
     {
         path: "/register",
@@ -47,7 +56,7 @@ const routes = [
     },
     {
         path: "/login",
-        name: "Log in",
+        name: "Login",
         component: () => import("./views/LoginPage.vue"),
     },
 ];
@@ -65,7 +74,33 @@ router.beforeEach((to, from, next) => {
         document.title = to.name + " - Adelaide ID" || "Adelaide ID";
     });
 
-    next();
+    if (from.name == null) {
+        // On first page load
+        if (store.state.isLoggedIn) {
+            store.dispatch("refreshSession").then(() => {
+                if (to.matched.some((record) => record.meta.requiresAuth)) {
+                    if (!store.state.isLoggedIn) {
+                        next("/login");
+                    } else {
+                        next();
+                    }
+                } else {
+                    next();
+                }
+            });
+            return;
+        }
+    }
+
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
+        if (!store.state.isLoggedIn) {
+            next("/login");
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
 });
 
 export default router;

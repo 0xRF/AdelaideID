@@ -23,18 +23,19 @@ const onDecode = async (result) => {
         }
 
         let res = await fetch("/api/student?studentId=" + result);
-        
-        if (res.status == 404) {
-            throw { name: "InvalidBarcodeError", message: "Unable to fetch student details" };
+
+        if (res.status != 200) {
+            throw {
+                name: "InvalidBarcodeError",
+                message: "Unable to fetch student details",
+            };
         }
 
         let body = await res.json();
+        student.value = body;
 
         success.value = true;
         failed.value = false;
-        
-        student.value = body;
-
     } catch (error) {
         errorMessage.value = error.message;
         failed.value = true;
@@ -45,33 +46,56 @@ const onDecode = async (result) => {
 
 <template>
     <div>
-        <StreamBarcodeReader @decode="onDecode" :blur="success"></StreamBarcodeReader>
+        <StreamBarcodeReader
+            @decode="onDecode"
+            :blur="success"
+        ></StreamBarcodeReader>
 
         <div class="confirmation-window" v-if="success">
             <div class="spacer"></div>
-            <StudentCard  class="student-card" :first-name="student.first_name" :last-name="student.last_name" :student-id="student.student_id" :student-photo="student.photo_path" />
+            <StudentCard
+                class="student-card"
+                :first-name="student.first_name"
+                :last-name="student.last_name"
+                :student-id="student.student_id"
+                :student-photo="student.photo_path"
+            />
             <div class="spacer"></div>
-            <ConfirmationPopup :name="student.first_name" class="confirmation-popup" />
+            <ConfirmationPopup
+                :name="student.first_name"
+                class="confirmation-popup"
+            />
         </div>
-
 
         <div v-if="!failed" class="scan-idle-options">
             <p class="scan-idle-hint">
                 Scan barcode on the back of student ID card
             </p>
-                <button class="manual-add" @click="router.push('add')">
-                    <img
-                        class="icon"
-                        src="/assets/plus-circle.svg"
-                        alt="Settings icon"
-                    />
-                    <span>Add Manually</span>
-                </button>
+            <button class="manual-add" @click="router.push('add')">
+                <img
+                    class="icon"
+                    src="/assets/plus-circle.svg"
+                    alt="Settings icon"
+                />
+                <span>Add Manually</span>
+            </button>
         </div>
         <div v-else class="scan-fail-parent">
             <div class="scan-fail-message">
-                <svg alt="Back arrow" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg
+                    alt="Back arrow"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                 </svg>
                 <b>{{ errorMessage }}</b>
             </div>
@@ -118,8 +142,8 @@ const onDecode = async (result) => {
     display: flex;
     flex-direction: row;
     gap: 16px;
-    border: 3px solid #FF8080;
-    color: #FF8080;
+    border: 3px solid #ff8080;
+    color: #ff8080;
     filter: drop-shadow(0px 2px 8px rgba(99, 99, 99, 0.2));
     background-color: transparent;
 }
@@ -139,7 +163,6 @@ const onDecode = async (result) => {
     text-align: center;
 }
 
-
 .confirmation-window {
     position: absolute;
     width: 100%;
@@ -153,5 +176,4 @@ const onDecode = async (result) => {
 .student-card {
     margin: 0 28px;
 }
-
 </style>
