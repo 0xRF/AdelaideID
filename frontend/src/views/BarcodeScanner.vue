@@ -4,6 +4,7 @@ import StudentCard from "../components/StudentCard.vue";
 import ConfirmationPopup from "../components/ConfirmationPopup.vue";
 
 import { ref } from "vue";
+import router from "../router";
 
 const student = ref({});
 const failed = ref(false);
@@ -58,8 +59,7 @@ const onDecode = async (result) => {
             <p class="scan-idle-hint">
                 Scan barcode on the back of student ID card
             </p>
-            <router-link class="manual-add" to="/add">
-                <button>
+                <button class="manual-add" @click="router.push('add')">
                     <img
                         class="icon"
                         src="/assets/plus-circle.svg"
@@ -67,7 +67,6 @@ const onDecode = async (result) => {
                     />
                     <span>Add Manually</span>
                 </button>
-            </router-link>
         </div>
         <div v-else class="scan-fail-parent">
             <div class="scan-fail-message">
@@ -92,16 +91,13 @@ const onDecode = async (result) => {
     padding: 28px;
 }
 
-.manual-add button {
+.manual-add {
     padding: 8px 16px;
     gap: 8px;
     display: flex;
     box-shadow: 0px 2px 8px rgba(99, 99, 99, 0.2);
     border-radius: 20px;
     align-items: center;
-}
-
-.manual-add {
     text-decoration: none;
 }
 

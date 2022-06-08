@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import router from "../router";
 const username = ref("");
 const password = ref("");
@@ -21,11 +21,17 @@ const login = async () => {
     submitting.value = false;
     if (res.status == 200) router.replace("/");
 };
+
+const isFormValid = computed(
+    () =>
+        username.value.length == 8 &&
+        password.value >= 8
+);
 </script>
 
 <template>
     <div class="login">
-        <p>Log in to your account for Adelaide ID here.</p>
+        <p>Log in to your Adelaide ID  account here.</p>
         <div>
             <label><b>Staff / Student ID</b></label>
             <input
@@ -43,7 +49,7 @@ const login = async () => {
         <div class="confirmation-buttons">
             <button
                 class="confirmation-confirm"
-                :disabled="submitting"
+                :disabled="submitting || !isFormValid"
                 @click="login"
             >
                 <img src="/assets/check-circle.svg" alt="Back arrow" />
