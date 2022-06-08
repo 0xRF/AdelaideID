@@ -1,8 +1,9 @@
 <template>
     <div class="scanner-container">
-        <div class="overlay-element"></div>
-        <div class="overlay-corners"></div>
+        <div v-if="!blur"  class="overlay-element"></div>
+        <div v-if="!blur" class="overlay-corners"></div>
         <video
+            :class="{ 'video-blur': blur }"
             v-show="!isLoading"
             ref="scanner"
             poster="data:image/gif,AAAA"
@@ -18,6 +19,9 @@ import { BrowserMultiFormatReader, Exception } from "@zxing/library";
 export default {
     name: "StreamBarcodeReader",
 
+    props: [
+        'blur'
+    ],
     data() {
         return {
             isLoading: false,
@@ -132,5 +136,9 @@ video {
     
     background-repeat: no-repeat;
     background-size: 28px 28px;
+}
+
+.video-blur {
+    filter: blur(50px) brightness(0.5);
 }
 </style>

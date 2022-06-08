@@ -8,57 +8,74 @@ import { ref } from "vue";
 const student = ref({});
 const failed = ref(false);
 const success = ref(false);
+
+const errorMessage = ref("Unknown error");
+
 const onDecode = async (result) => {
     try {
+        if (failed.value) {
+            return;
+        }
 
         if (result.length != 7) {
-            throw { name: "InvalidBarcodeError", message: "Invalid Barcode." };
+            throw { name: "InvalidBarcodeError", message: "Invalid Barcode" };
         }
-
-        success.value = true;
 
         let res = await fetch("/api/student?studentId=" + result);
-        let body = await res.json();
-
-        if (!body) {
-            throw { name: "InvalidBarcodeError", message: "Unable to fetch student details." };
+        
+        if (res.status == 404) {
+            throw { name: "InvalidBarcodeError", message: "Unable to fetch student details" };
         }
 
-        failed.value = false;
+        let body = await res.json();
 
+        success.value = true;
+        failed.value = false;
+        
         student.value = body;
-    } catch (ignore) {
+
+    } catch (error) {
+        errorMessage.value = error.message;
         failed.value = true;
-        // setTimeout(() => (failed.value = false), 1000);
+        setTimeout(() => (failed.value = false), 3000);
     }
 };
 </script>
 
 <template>
     <div>
-        <StreamBarcodeReader @decode="onDecode"></StreamBarcodeReader>
+        <StreamBarcodeReader @decode="onDecode" :blur="success"></StreamBarcodeReader>
 
-        <StudentCard v-if="success" class="student-card" :firstName="student.first_name" :lastName="student.last_name" :studentID="student.student_id" :studentPhoto="student.photo_path" />
-        <ConfirmationPopup v-if="success" :name="student.first_name" class="confirmation-popup" />
+        <div class="confirmation-window" v-if="success">
+            <div class="spacer"></div>
+            <StudentCard  class="student-card" :first-name="student.first_name" :last-name="student.last_name" :student-id="student.student_id" :student-photo="student.photo_path" />
+            <div class="spacer"></div>
+            <ConfirmationPopup :name="student.first_name" class="confirmation-popup" />
+        </div>
+
 
         <div v-if="!failed" class="scan-idle-options">
             <p class="scan-idle-hint">
                 Scan barcode on the back of student ID card
             </p>
-            <button class="manual-add">
-                <img
-                    class="icon"
-                    src="/assets/plus-circle.svg"
-                    alt="Settings icon"
-                />
-                <span>Add Manually</span>
-            </button>
+            <router-link class="manual-add" to="/add">
+                <button>
+                    <img
+                        class="icon"
+                        src="/assets/plus-circle.svg"
+                        alt="Settings icon"
+                    />
+                    <span>Add Manually</span>
+                </button>
+            </router-link>
         </div>
-        <div v-else class="scan-fail-options">
-            <button class="scan-fail-message">
-                <img src="/assets/x-circle.svg" alt="Back arrow" />
-                <b>Cannot Confirm<br />Already Marked Present</b>
-            </button>
+        <div v-else class="scan-fail-parent">
+            <div class="scan-fail-message">
+                <svg alt="Back arrow" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <b>{{ errorMessage }}</b>
+            </div>
         </div>
     </div>
 </template>
@@ -75,7 +92,7 @@ const onDecode = async (result) => {
     padding: 28px;
 }
 
-.manual-add {
+.manual-add button {
     padding: 8px 16px;
     gap: 8px;
     display: flex;
@@ -84,29 +101,26 @@ const onDecode = async (result) => {
     align-items: center;
 }
 
+.manual-add {
+    text-decoration: none;
+}
+
 .scan-idle-hint {
     max-width: 200px;
     text-align: center;
 }
 
-.student-card {
-    position: absolute;
-    top: 0;
-    z-index: 100;
-}
-
-.scan-fail-options {
+.scan-fail-parent {
     position: absolute;
     bottom: 28px;
     width: 100%;
-    margin: 0 28px;
 }
 
 .scan-fail-message {
+    border-radius: 20px;
+    margin: 0 28px;
     display: flex;
     flex-direction: row;
-    width: calc(100% - 56px);
-    height: 64px;
     gap: 16px;
     border: 3px solid #FF8080;
     color: #FF8080;
@@ -114,7 +128,7 @@ const onDecode = async (result) => {
     background-color: transparent;
 }
 
-.scan-fail-message img {
+.scan-fail-message svg {
     height: 64px;
     width: 64px;
     padding: 20px;
@@ -128,4 +142,20 @@ const onDecode = async (result) => {
     align-items: center;
     text-align: center;
 }
+
+
+.confirmation-window {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 25;
+    display: flex;
+    flex-direction: column;
+}
+
+.student-card {
+    margin: 0 28px;
+}
+
 </style>

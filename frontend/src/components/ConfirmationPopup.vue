@@ -41,7 +41,6 @@ defineProps({
 
 <style scoped>
 .confirmation-popup {
-    position: fixed;
     /* background-color: antiquewhite; */
 
     width: 100%;

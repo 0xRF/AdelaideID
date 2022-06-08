@@ -1,3 +1,7 @@
+<script setup>
+import router from "../router";
+</script>
+
 <template>
     <div class="manual-add-page">
         <p>Manually add students without ID cards to follow-up with later.</p>
@@ -32,7 +36,7 @@
         </div>
         <div class="spacer" />
         <div class="confirmation-buttons">
-            <button class="confirmation-cancel">
+            <button class="confirmation-cancel" @click="router.back()">
                 <img src="/assets/x-circle.svg" alt="Back arrow" />
                 <p>Cancel</p>
             </button>
@@ -57,6 +61,7 @@
 }
 
 .image-upload-prompt {
+    cursor: pointer;
     background-color: #e5e5e5;
     height: 128px;
     border-radius: 5px;

@@ -10,7 +10,7 @@ defineProps({
         type: String,
         default: "unavailable",
     },
-    studentID: {
+    studentId: {
         type: String,
         default: "unavailable",
     },
@@ -38,7 +38,7 @@ defineProps({
                 ><br /><br />
 
                 <span>Student ID:</span><br />
-                <b>{{ studentID }}</b>
+                <b>a{{ studentId }}</b>
             </p>
             <img class="id-photo" :src="studentPhoto" />
         </div>
@@ -48,8 +48,6 @@ defineProps({
 <style scoped>
 .id-card {
     height: 256px;
-    width: calc(100% - 56px);
-    margin: 0 28px;
     box-shadow: 0px 2px 8px rgba(99, 99, 99, 0.2);
     border-radius: 5px;
     background-color: white;
@@ -90,5 +88,6 @@ defineProps({
     width: 124px;
     height: 176px;
     background-color: #e5e5e5;
+    object-fit: cover;
 }
 </style>

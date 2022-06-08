@@ -46,17 +46,24 @@ app.post("/api/authenticate", async (req, res) => {
 app.get("/api/student", async (req, res) => {
     try {
         let student = await db.getStudent(req.query.studentId);
-        res.send(student);
+
+        if (student == null) {
+            res.sendStatus(404);
+        }
+        else {
+            res.send(student);
+        }
+
     } catch (e) {
         console.error(e);
         res.sendStatus(400);
     }
 })
 
-
 app.get("/api/courses", async (req, res) => {
     try {
         let user = await db.getUserById(req.session.userId);
+
         let courses = await canvas.getCourses(user.canvas_token);
         res.send(courses);
     } catch (e) {
@@ -120,7 +127,7 @@ app.post("/api/register", async (req, res) => {
     }
 })
 
-app.post("/api/login", async (req, res) => {    
+app.post("/api/login", async (req, res) => {
     try {
         let user = await db.getUserByName(req.body.username);
 
@@ -130,7 +137,7 @@ app.post("/api/login", async (req, res) => {
 
         let isCorrect = await bcrypt.compare(req.body.password, user.password_hash);
 
-        if (!isCorrect) {         
+        if (!isCorrect) {
             throw { name: "InvalidCredentialsError", message: "Unable to login, credentials are invalid." };
         }
 
