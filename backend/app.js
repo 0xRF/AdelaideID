@@ -4,6 +4,8 @@ const axios = require("axios").default;
 const canvas = require("./dal/CanvasDal.js");
 const db = require("./dal/DbDal.js");
 const bcrypt = require("bcrypt");
+const fileUpload = require('express-fileupload');
+const path = require("path");
 
 const HASH_ROUNDS = 5;
 
@@ -12,11 +14,14 @@ const app = express();
 
 app.use(express.json());
 
-app.use(session({
-    secret: "notsecure",
-    resave: false,
-    saveUninitialized: true
-}));
+app.use(
+    session({
+        secret: "notsecure",
+        resave: false,
+        saveUninitialized: true
+    }),
+    fileUpload()
+);
 
 app.get("/api/session", (req, res) => {
     let result = {
@@ -157,6 +162,26 @@ app.post("/api/login", async (req, res) => {
             res.sendStatus(400);
         }
     }
+})
+
+
+app.post("/api/partial", async (req, res) => {
+    if (!req.files) {
+        res.status(500).send("No files were uploaded.");
+    }
+
+    const file = req.files.file;
+    const extension = file.mimetype.split('/')[1];
+    const path = __dirname + "/files/" + file.md5 + '.' + extension;
+
+    file.mv(path, (err) => {
+        if (err) {
+        console.log(path);
+        console.log(err);
+            res.sendStatus(500)
+        }
+    });
+    res.sendStatus(200);
 })
 
 app.listen(port, () => {

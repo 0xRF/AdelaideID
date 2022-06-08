@@ -8,7 +8,7 @@ const bearerToken = ref("");
 
 const submitting = ref(false);
 
-const register = async () => {
+const login = async () => {
     submitting.value = true;
 
     let res = await fetch("/api/register", {
