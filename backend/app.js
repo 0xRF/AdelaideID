@@ -173,21 +173,43 @@ app.post("/api/mark", (req, res) => {
 })
 
 app.post("/api/partial", async (req, res) => {
+
     if (!req.files) {
-        res.status(500).send("No files were uploaded.");
+        console.log('e1');
+        return res.sendStatus(500)
     }
 
     const file = req.files.file;
     const extension = file.mimetype.split('/')[1];
     const path = __dirname + "/files/" + file.md5 + '.' + extension;
 
-    file.mv(path, (err) => {
-        if (err) {
-        console.log(path);
-        console.log(err);
-            res.sendStatus(500)
-        }
-    });
+    let first_name = req.body.first_name
+    let last_name = req.body.last_name;
+    let student_id = req.body.student_id;
+
+    try {
+        file.mv(path, (err) => {
+            if (err) {
+                console.log('move file error');
+                console.log(path);
+                console.log(err);
+            }
+        });
+    } catch (e) {
+        console.log('e2');
+        return res.sendStatus(500)
+    }
+
+    try {
+        db.addPartial(course_id, asignment_id, student_id, first_name, last_name, student_id, path);
+
+    } catch (e) {
+    console.log('e3');
+    console.log(e);
+        return res.sendStatus(500)
+    }
+
+    console.log('It worked??');
     res.sendStatus(200);
 })
 

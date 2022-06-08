@@ -56,6 +56,22 @@ async function addStudent(courseId, assignmentId, studentId, userId) {
     con.release();
 };
 
+
+async function addPartial(courseId, assignmentId, userId, firstName, lastName, studentId, filePath) {
+    try {
+        await addAssignment(assignmentId, courseId);
+    } catch (err) {
+        if (err.code != 'ER_DUP_ENTRY') throw err;
+    }
+
+    let con = await getConnection();
+    //    await con.query('INSERT INTO Attendance_records (time_stamp, assignment_id, student_id, user_id) VALUES (now(), ?, ?, ?)', [assignmentId, studentId, userId]);
+    console.log('Adding a students partial attendanace');
+    con.release();
+};
+
+
+
 async function addUser(firstName, lastName, username, bearerToken, passwordHash) {
     // check if user exists
     let con = await getConnection();
@@ -101,5 +117,6 @@ module.exports = {
     getStudent,
     addUser,
     getUserById,
-    getUserByName
+    getUserByName,
+    addPartial
 }
