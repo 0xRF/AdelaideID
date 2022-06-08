@@ -92,7 +92,8 @@ app.get("/api/self", async (req, res) => {
 
 app.get("/api/assignments", async (req, res) => {
     try {
-        let assignments = await db.getAssignments(req.body.class_id, req.session.userId);
+        let user = await db.getUserById(req.session.userId);
+        let assignments = await canvas.getAssignments(req.query.course_id, user.canvas_token);
         res.send(assignments);
     } catch (e) {
         console.error(e);

@@ -64,7 +64,8 @@ async function getAssignments(course_id, bearer_token) {
 
     return sorted.map(v => ({
         id: v.id,
-        name: v.name
+        name: v.name,
+        due_at: v.due_at,
     }))
 };
 
