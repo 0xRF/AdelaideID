@@ -7,10 +7,6 @@ let props = defineProps({
         type: Number,
         default: 0,
     },
-    courseId: {
-        type: String,
-        default: "",
-    },
     title: {
         type: String,
         default: "",
@@ -24,18 +20,13 @@ let props = defineProps({
 const colour = ref(`background-color: hsl(${0}, 100%, 90%)`);
 
 const openMyUni = () => {
-    window.open(
-        "https://myuni.adelaide.edu.au/courses/" +
-            props.courseId +
-            "/assignments/" +
-            props.id
-    );
+    window.open("https://myuni.adelaide.edu.au/courses/" + props.id);
 };
 
-const goToScan = () => {
+const goToClasses = () => {
     router.push({
-        name: "Scan",
-        params: { id: props.id, className: props.title },
+        name: "Classes",
+        params: { id: props.id, courseName: props.title },
     });
 };
 </script>
@@ -57,9 +48,8 @@ const goToScan = () => {
                 <img class="icon" src="/assets/external-link.svg" />
                 <span>MyUni</span>
             </button>
-            <button style="flex: 2" @click="goToScan">
-                <img class="icon" src="/assets/plus-circle.svg" />
-                <span>Scan ID</span>
+            <button style="flex: 2" @click="goToClasses">
+                <span>View classes</span>
             </button>
         </div>
     </div>

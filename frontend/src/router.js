@@ -14,9 +14,10 @@ const routes = [
         },
     },
     {
-        path: "/class/:id",
+        path: "/course/:id",
         name: "Classes",
         component: () => import("./views/ClassPage.vue"),
+        props: true,
         meta: {
             requiresAuth: true,
         },
@@ -32,9 +33,10 @@ const routes = [
         component: () => import("./views/SettingsPage.vue"),
     },
     {
-        path: "/scan",
-        name: "Scanner",
-        component: () => import("./views/BarcodeScanner.vue"),
+        path: "/scan/:id",
+        name: "Scan",
+        component: () => import("./views/ScanPage.vue"),
+        props: true,
         meta: {
             fullscreen: true,
             invert: true,
@@ -42,9 +44,10 @@ const routes = [
         },
     },
     {
-        path: "/add",
+        path: "/add/:id",
         name: "Manual Add",
         component: () => import("./views/AddPage.vue"),
+        props: true,
         meta: {
             requiresAuth: true,
         },
@@ -72,6 +75,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     nextTick(() => {
         document.title = to.name + " - Adelaide ID" || "Adelaide ID";
+        store.commit("setHeaderText", to.name);
     });
 
     if (from.name == null) {

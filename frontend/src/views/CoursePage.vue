@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { onMounted } from "vue";
-import ClassCard from "../components/ClassCard.vue";
+import CourseCard from "../components/CourseCard.vue";
 
 const courses = ref([]);
 
@@ -13,7 +13,7 @@ onMounted(async () => {
 
 <template>
     <div class="courses">
-        <ClassCard
+        <CourseCard
             v-for="course in courses"
             :key="course.id"
             :id="course.id"

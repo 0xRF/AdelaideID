@@ -1,5 +1,6 @@
 <script setup>
 import router from "./router";
+import store from "./store";
 import { ref } from "vue";
 const scrolled = ref(false);
 const onScroll = (e) => {
@@ -42,7 +43,7 @@ const onScroll = (e) => {
             </svg>
         </a>
         <div v-else class="icon" />
-        <h1 class="title">{{ router.currentRoute.value.name }}</h1>
+        <h1 class="title">{{ store.state.headerText }}</h1>
         <router-link
             v-if="router.currentRoute.value.path != '/settings'"
             to="/settings"

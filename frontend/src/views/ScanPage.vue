@@ -3,14 +3,19 @@ import StreamBarcodeReader from "../components/StreamBarcodeReader.vue";
 import StudentCard from "../components/StudentCard.vue";
 import ConfirmationPopup from "../components/ConfirmationPopup.vue";
 
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import router from "../router";
+import store from "../store";
 
 const student = ref({});
 const failed = ref(false);
 const success = ref(false);
 
 const errorMessage = ref("Unknown error");
+
+const props = defineProps({
+    className: String,
+});
 
 const onDecode = async (result) => {
     try {
@@ -42,6 +47,10 @@ const onDecode = async (result) => {
         setTimeout(() => (failed.value = false), 3000);
     }
 };
+
+onMounted(() => {
+    if (props.className != null) store.commit("setHeaderText", props.className);
+});
 </script>
 
 <template>
@@ -71,13 +80,21 @@ const onDecode = async (result) => {
             <p class="scan-idle-hint">
                 Scan barcode on the back of student ID card
             </p>
-            <button class="manual-add" @click="router.push('add')">
+            <button
+                class="manual-add"
+                @click="
+                    router.push({
+                        name: 'Manual Add',
+                        params: { id: router.currentRoute.value.params.id },
+                    })
+                "
+            >
                 <img
                     class="icon"
                     src="/assets/plus-circle.svg"
                     alt="Settings icon"
                 />
-                <span>Add Manually</span>
+                <span>Add manually</span>
             </button>
         </div>
         <div v-else class="scan-fail-parent">
