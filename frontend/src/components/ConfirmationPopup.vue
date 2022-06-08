@@ -6,16 +6,22 @@ defineProps({
         type: String,
         default: "",
     },
-    course: {
+    className: {
         type: String,
         default: "",
     },
+    confirmed: {
+        type: Boolean,
+        default: false,
+    },
 });
+
+const emit = defineEmits(['confirm', 'cancel']);
 </script>
 
 <template>
     <div class="confirmation-popup shadow">
-        <div v-if="false" class="success-content">
+        <div v-if="confirmed" class="success-content">
             <img class="success-icon" src="/assets/check-circle-alt.svg" />
             <p class="success-message"><b>Successfully added!</b></p>
         </div>
@@ -23,14 +29,15 @@ defineProps({
         <div v-else class="content">
             <p class="confirmation-text">
                 Mark <b>{{ name }}</b> as present for
-                <b>{{ course }}</b>
+                <b>{{ className }}</b>?
             </p>
             <div class="confirmation-buttons">
-                <button class="confirmation-cancel">
+                <button class="confirmation-cancel" @click="emit('cancel')">
                     <img src="/assets/x-circle.svg" alt="Back arrow" />
                     <span>Cancel</span>
                 </button>
-                <button class="confirmation-confirm">
+                <button 
+                @click="emit('confirm');" class="confirmation-confirm">
                     <img src="/assets/check-circle.svg" alt="Back arrow" />
                     <span>Confirm</span>
                 </button>

@@ -49,6 +49,7 @@ const goToClasses = () => {
                 <span>MyUni</span>
             </button>
             <button style="flex: 2" @click="goToClasses">
+                <img class="icon" src="/assets/collection.svg" />
                 <span>View classes</span>
             </button>
         </div>

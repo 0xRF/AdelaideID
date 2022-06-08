@@ -168,6 +168,9 @@ app.get("/api/logout", (req, res) => {
     res.sendStatus(200);
 })
 
+app.post("/api/mark", (req, res) => {
+    // how tho
+})
 
 app.post("/api/partial", async (req, res) => {
     if (!req.files) {

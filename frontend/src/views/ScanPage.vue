@@ -10,6 +10,7 @@ import store from "../store";
 const student = ref({});
 const failed = ref(false);
 const success = ref(false);
+const confirmed = ref(false);
 
 const errorMessage = ref("Unknown error");
 
@@ -48,9 +49,19 @@ const onDecode = async (result) => {
     }
 };
 
+const onConfirm = () => {
+    confirmed.value = true;
+};
+
+const onCancel = () => {
+    success.value = false;
+    student.value = {};
+};
+
 onMounted(() => {
     if (props.className != null) store.commit("setHeaderText", props.className);
 });
+
 </script>
 
 <template>
@@ -72,7 +83,11 @@ onMounted(() => {
             <div class="spacer"></div>
             <ConfirmationPopup
                 :name="student.first_name"
+                :confirmed="confirmed"
+                :class-name="props.className"
                 class="confirmation-popup"
+                @confirm="onConfirm"
+                @cancel="onCancel"
             />
         </div>
 
