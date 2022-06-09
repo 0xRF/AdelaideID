@@ -36,7 +36,7 @@ async function getAssignments() {
     return rows;
 };
 
-async function getCourseByAssignmentId(assigmentId) {
+async function getCourseByAssignmentId(assignmentId) {
     let con = await getConnection();
     let [rows, _fields] = await con.query('SELECT * FROM Assignments WHERE assignment_id = ?', [assignmentId]);
     con.release();

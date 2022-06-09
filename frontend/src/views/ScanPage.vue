@@ -55,7 +55,7 @@ const onConfirm = async () => {
         method: "POST",
         body: JSON.stringify({
             assignment_id: router.currentRoute.value.params.id,
-            student_id: student.student_id,
+            student_id: student.value.student_id,
         }),
         headers: {
             'Content-Type': 'application/json'
@@ -72,8 +72,6 @@ const onCancel = () => {
 onMounted(() => {
     if (props.className != null) store.commit("setHeaderText", props.className);
 });
-
-success.value = true;
 
 </script>
 
