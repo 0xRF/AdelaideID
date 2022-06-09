@@ -5,6 +5,19 @@ const CANVAS_ENDPOINT = "https://myuni.adelaide.edu.au/api/v1/";
 
 console.log('Canvas Module Loaded');
 
+async function markStudent(bearer_token, courseId, assignmentId, studentId) {
+//    https://myuni.adelaide.edu.au/api/v1/courses/77766/assignments/284124/submissions/164176
+    
+    let form = new FormData();
+    form.append('submission[posted_grade]', 1);
+    let ret = await axios.put(```CANVAS_ENDPOINT${courseId}/assignments/${assignmentId}/submissions/${studentId}```, {
+            headers: {
+                "Authorization": `Bearer ${bearer_token}`
+            },
+            body: form
+    });
+};
+
 //TODO map or only return the fields we actually use or need
 async function getSelf(bearer_token) {
     let userInfo = await axios.get(CANVAS_ENDPOINT + "users/self",
@@ -73,5 +86,6 @@ module.exports = {
     getSelf,
     getStudentInfo,
     getCourses,
-    getAssignments
+    getAssignments,
+    markStudent
 }

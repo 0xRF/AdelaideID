@@ -31,22 +31,6 @@ app.get("/api/session", (req, res) => {
     res.send(result);
 })
 
-app.post("/api/authenticate", async (req, res) => {
-    try {
-        let token = req.body.canvas_token;
-        let userInfo = await canvas.getSelf(token);
-
-        // Temporary storage (this will be moved into database once that is set up)
-        req.session.canvasToken = token;
-        req.session.userInfo = userInfo.data;
-        console.log(userInfo.data)
-        res.send(userInfo.data);
-    } catch (e) {
-        console.error(e)
-        res.sendStatus(400);
-    }
-})
-
 app.get("/api/student", async (req, res) => {
     try {
         let student = await db.getStudent(req.query.studentId);
@@ -176,10 +160,22 @@ app.get("/api/logout", (req, res) => {
 })
 
 app.post("/api/mark", (req, res) => {
-    // how tho
+    try{
+        let assignmentId = req.body.assignment_id;
+        let studentId = req.body.student_id;
+        let courseId = await db.getCourseByAssignmentId(assignmentId);
+        let canvasToken = await db.getUserById(req.session.userId).canvas_token;
+        let canvasStudentId = await canvas.getStudentInfo(canvasToken,studentId, courseId);
+
+        await canvas.markStudent(canvasToken, courseId, assignmentId, canvasStudentId);
+
+    }catch(e){
+        return res.sendStatus(500);
+    }
+    res.sendStatus(200);
 })
 
-app.post("/api/partial", async (req, res) => {
+app.post("/api/followup", async (req, res) => {
 
     if (!req.files) {
         console.log('e1');
@@ -193,6 +189,7 @@ app.post("/api/partial", async (req, res) => {
     let first_name = req.body.first_name
     let last_name = req.body.last_name;
     let student_id = req.body.student_id;
+    let assignment_id = req.body.assignment_id;
 
     try {
         file.mv(path, (err) => {
@@ -203,20 +200,17 @@ app.post("/api/partial", async (req, res) => {
             }
         });
     } catch (e) {
-        console.log('e2');
         return res.sendStatus(500)
     }
 
     try {
-        db.addPartial(course_id, asignment_id, student_id, first_name, last_name, student_id, path);
+        db.addFollowUp(assignment_id, req.session.userId, first_name, last_name, student_id, path);
 
     } catch (e) {
-        console.log('e3');
         console.log(e);
         return res.sendStatus(500)
     }
 
-    console.log('It worked??');
     res.sendStatus(200);
 })
 
