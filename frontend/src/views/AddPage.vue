@@ -30,7 +30,7 @@ const submit = async () => {
     formData.append("assignment_id", router.currentRoute.value.params.id);
     if (student_id.value.length == 8)
         formData.append("student_id", student_id.value);
-    let res = await fetch("/api/partial", {
+    let res = await fetch("/api/followup", {
         method: "POST",
         body: formData,
     });

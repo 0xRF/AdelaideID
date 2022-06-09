@@ -160,10 +160,22 @@ app.get("/api/logout", (req, res) => {
 })
 
 app.post("/api/mark", (req, res) => {
-    // how tho
+    try{
+        let assignmentId = req.body.assignment_id;
+        let studentId = req.body.student_id;
+        let courseId = await db.getCourseByAssignmentId(assignmentId);
+        let canvasToken = await db.getUserById(req.session.userId).canvas_token;
+        let canvasStudentId = await canvas.getStudentInfo(canvasToken,studentId, courseId);
+
+        await canvas.markStudent(canvasToken, courseId, assignmentId, canvasStudentId);
+
+    }catch(e){
+        return res.sendStatus(500);
+    }
+    res.sendStatus(200);
 })
 
-app.post("/api/partial", async (req, res) => {
+app.post("/api/followup", async (req, res) => {
 
     if (!req.files) {
         console.log('e1');

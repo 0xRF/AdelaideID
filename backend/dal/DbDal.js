@@ -36,6 +36,15 @@ async function getAssignments() {
     return rows;
 };
 
+async function getCourseByAssignmentId(assigmentId) {
+    let con = await getConnection();
+    let [rows, _fields] = await con.query('SELECT * FROM Assignments WHERE assignment_id = ?', [assignmentId]);
+    con.release();
+    return rows[0].course_id;
+};
+
+
+
 async function getStudent(studentId) {
     let con = await getConnection();
     let [rows, _fields] = await con.query('SELECT * FROM Students WHERE student_id = ?', [studentId]);
@@ -114,5 +123,6 @@ module.exports = {
     addUser,
     getUserById,
     getUserByName,
-    addFollowUp
+    addFollowUp,
+    getCourseByAssignmentId
 }
