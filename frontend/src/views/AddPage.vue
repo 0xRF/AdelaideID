@@ -21,6 +21,7 @@ const submit = async () => {
     formData.append("file", photo_file.value);
     formData.append("first_name", first_name.value);
     formData.append("last_name", last_name.value);
+    formData.append("assignment_id", router.currentRoute.value.params.id);
     if (student_id.value.length == 8)
         formData.append("student_id", student_id.value);
     let res = await fetch("/api/partial", {

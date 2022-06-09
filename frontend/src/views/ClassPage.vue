@@ -16,7 +16,10 @@ onMounted(async () => {
         store.commit("setHeaderText", props.courseName);
 
     let res = await fetch(
-        "/api/assignments?course_id=" + router.currentRoute.value.params.id
+        "/api/assignments?" +
+        new URLSearchParams({
+            course_id: router.currentRoute.value.params.id,
+        })
     );
 
     classes.value = await res.json();
@@ -25,14 +28,8 @@ onMounted(async () => {
 
 <template>
     <div class="classes">
-        <ClassCard
-            v-for="i in classes"
-            :key="i.id"
-            :id="i.id"
-            :title="i.name"
-            :details="i.name"
-            :course-id="router.currentRoute.value.params.id"
-        />
+        <ClassCard v-for="i in classes" :key="i.id" :id="i.id" :title="i.name" :details="i.name"
+            :course-id="router.currentRoute.value.params.id" />
     </div>
 </template>
 

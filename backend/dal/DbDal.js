@@ -43,13 +43,7 @@ async function getStudent(studentId) {
     return rows[0];
 };
 
-async function addStudent(courseId, assignmentId, studentId, userId) {
-    try {
-        await addAssignment(assignmentId, courseId);
-    } catch (err) {
-        if (err.code != 'ER_DUP_ENTRY') throw err;
-    }
-
+async function markStudent(assignmentId, studentId, userId) {
     let con = await getConnection();
     await con.query('INSERT INTO Attendance_records (time_stamp, assignment_id, student_id, user_id) VALUES (now(), ?, ?, ?)', [assignmentId, studentId, userId]);
     console.log('Adding a students attendance');
@@ -57,16 +51,18 @@ async function addStudent(courseId, assignmentId, studentId, userId) {
 };
 
 
-async function addPartial(courseId, assignmentId, userId, firstName, lastName, studentId, filePath) {
-    try {
-        await addAssignment(assignmentId, courseId);
-    } catch (err) {
-        if (err.code != 'ER_DUP_ENTRY') throw err;
-    }
+async function addFollowUp(assignmentId, userId, firstName, lastName, studentId, filePath) {
+    console.log(assignmentId);
+    console.log(userId);
+    console.log(firstName);
+    console.log(lastName);
+    console.log(studentId);
+    console.log(filePath);
 
     let con = await getConnection();
-    //    await con.query('INSERT INTO Attendance_records (time_stamp, assignment_id, student_id, user_id) VALUES (now(), ?, ?, ?)', [assignmentId, studentId, userId]);
-    console.log('Adding a students partial attendanace');
+    await con.query('INSERT INTO Follow_ups (unverified_student_id, first_name, last_name, path_to_image, time_stamp, assignment_id, user_id) VALUES (?, ?, ?, ?, now(), ?, ?)',
+                                            [studentId,             firstName,  lastName,  filePath,                  assignmentId, userId]);
+    console.log('Adding a students follow up attendanace');
     con.release();
 };
 
@@ -113,10 +109,10 @@ async function getUserByName(username) {
 module.exports = {
     addAssignment,
     getAssignments,
-    addStudent,
+    markStudent,
     getStudent,
     addUser,
     getUserById,
     getUserByName,
-    addPartial
+    addFollowUp
 }
