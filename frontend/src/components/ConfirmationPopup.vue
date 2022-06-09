@@ -1,7 +1,12 @@
 <script setup>
 import { ref } from "vue";
+import seedrandom from "seedrandom";
+import router from "../router";
 
-defineProps({
+const props = defineProps({
+    id: {
+        type: Number,
+    },
     name: {
         type: String,
         default: "",
@@ -16,11 +21,15 @@ defineProps({
     },
 });
 
+let seed = seedrandom(parseInt(router.currentRoute.value.params.id));
+
+const colour = ref(`background-color: hsl(${Math.round(seed() * 360)}, 100%, 90%)`);
+
 const emit = defineEmits(['confirm', 'cancel']);
 </script>
 
 <template>
-    <div class="confirmation-popup shadow">
+    <div class="confirmation-popup shadow" :style="colour">
         <div v-if="confirmed" class="success-content">
             <img class="success-icon" src="/assets/check-circle-alt.svg" />
             <p class="success-message"><b>Successfully added!</b></p>
@@ -57,7 +66,7 @@ const emit = defineEmits(['confirm', 'cancel']);
 
     color: #363636;
 
-    background-color: #ccfff7;
+    /* background-color: #ccfff7; */
     border-radius: 20px 20px 0px 0px;
     padding: 32px 28px;
 
