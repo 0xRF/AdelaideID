@@ -43,8 +43,6 @@ async function getCourseByAssignmentId(assigmentId) {
     return rows[0].course_id;
 };
 
-
-
 async function getStudent(studentId) {
     let con = await getConnection();
     let [rows, _fields] = await con.query('SELECT * FROM Students WHERE student_id = ?', [studentId]);
@@ -61,13 +59,6 @@ async function markStudent(assignmentId, studentId, userId) {
 
 
 async function addFollowUp(assignmentId, userId, firstName, lastName, studentId, filePath) {
-    console.log(assignmentId);
-    console.log(userId);
-    console.log(firstName);
-    console.log(lastName);
-    console.log(studentId);
-    console.log(filePath);
-
     let con = await getConnection();
     await con.query('INSERT INTO Follow_ups (unverified_student_id, first_name, last_name, path_to_image, time_stamp, assignment_id, user_id) VALUES (?, ?, ?, ?, now(), ?, ?)',
                                             [studentId,             firstName,  lastName,  filePath,                  assignmentId, userId]);

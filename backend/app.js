@@ -159,7 +159,7 @@ app.get("/api/logout", (req, res) => {
     res.sendStatus(200);
 })
 
-app.post("/api/mark", (req, res) => {
+app.post("/api/mark", async (req, res) => {
     try{
         let assignmentId = req.body.assignment_id;
         let studentId = req.body.student_id;
