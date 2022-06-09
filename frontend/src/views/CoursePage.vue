@@ -15,8 +15,8 @@ onMounted(async () => {
     <div class="courses">
         <CourseCard
             v-for="course in courses"
-            :key="course.id"
             :id="course.id"
+            :key="course.id"
             :title="course.name"
             :details="course.course_code"
         />

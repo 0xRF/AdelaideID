@@ -3,7 +3,6 @@ import { ref } from "vue";
 import router from "../router";
 import seedrandom from "seedrandom";
 
-
 let props = defineProps({
     id: {
         type: Number,
@@ -21,7 +20,9 @@ let props = defineProps({
 
 var seed = seedrandom(props.id);
 
-const colour = ref(`background-color: hsl(${Math.round(seed() * 360)}, 100%, 90%)`);
+const colour = ref(
+    `background-color: hsl(${Math.round(seed() * 360)}, 100%, 90%)`
+);
 
 const openMyUni = () => {
     window.open("https://myuni.adelaide.edu.au/courses/" + props.id);

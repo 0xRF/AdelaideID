@@ -5,16 +5,15 @@ const CANVAS_ENDPOINT = "https://myuni.adelaide.edu.au/api/v1/";
 
 console.log('Canvas Module Loaded');
 
-async function markStudent(bearer_token, courseId, assignmentId, studentId) {
-//    https://myuni.adelaide.edu.au/api/v1/courses/77766/assignments/284124/submissions/164176
-    
-    let form = new FormData();
-    form.append('submission[posted_grade]', 1);
-    let ret = await axios.put(```CANVAS_ENDPOINT${courseId}/assignments/${assignmentId}/submissions/${studentId}```, {
-            headers: {
-                "Authorization": `Bearer ${bearer_token}`
-            },
-            body: form
+async function markStudent(bearer_token, course_id, assignment_id, student_id) {
+    await axios.put(`${CANVAS_ENDPOINT}courses/${course_id}/assignments/${assignment_id}/submissions/${student_id}`, {
+        submission: {
+            posted_grade: 1
+        }
+    }, {
+        headers: {
+            "Authorization": `Bearer ${bearer_token}`
+        }
     });
 };
 

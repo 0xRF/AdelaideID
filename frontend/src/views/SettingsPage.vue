@@ -1,20 +1,24 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import store from "../store";
 
 const name = ref("");
 
-fetch("/api/self")
-.then(response => response.json())
-.then(result => {
-    name.value = result.name;
+onMounted(async () => {
+    if (store.state.isLoggedIn) {
+        let res = await fetch("/api/self");
+        let body = await res.json();
+        name.value = body.name;
+    }
 });
-
 </script>
 
 <template>
     <div>
-        <p>Signed in as <b>{{ name }}</b></p>
+        <label v-if="store.state.isLoggedIn"
+            >Signed in as <b>{{ name }}</b></label
+        >
+        <label v-else>Not logged in</label>
         <div class="confirmation-buttons">
             <button
                 :disabled="!store.state.isLoggedIn"
@@ -26,11 +30,3 @@ fetch("/api/self")
         </div>
     </div>
 </template>
-
-
-<style scoped>
-.confirmation-buttons button {
-    border-radius: 5px;
-    background-color: white;
-}
-</style>

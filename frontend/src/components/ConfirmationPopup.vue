@@ -23,9 +23,11 @@ const props = defineProps({
 
 let seed = seedrandom(parseInt(router.currentRoute.value.params.id));
 
-const colour = ref(`background-color: hsl(${Math.round(seed() * 360)}, 100%, 90%)`);
+const colour = ref(
+    `background-color: hsl(${Math.round(seed() * 360)}, 100%, 90%)`
+);
 
-const emit = defineEmits(['confirm', 'cancel']);
+const emit = defineEmits(["confirm", "cancel"]);
 </script>
 
 <template>
@@ -37,16 +39,15 @@ const emit = defineEmits(['confirm', 'cancel']);
 
         <div v-else class="content">
             <p class="confirmation-text">
-                Mark <b>{{ name }}</b> as present for
-                <b>{{ className }}</b>?
+                Mark <b>{{ name }}</b> as present for <b>{{ className }}</b
+                >?
             </p>
             <div class="confirmation-buttons">
                 <button class="confirmation-cancel" @click="emit('cancel')">
                     <img src="/assets/x-circle.svg" alt="Back arrow" />
                     <span>Cancel</span>
                 </button>
-                <button 
-                @click="emit('confirm');" class="confirmation-confirm">
+                <button @click="emit('confirm')" class="confirmation-confirm">
                     <img src="/assets/check-circle.svg" alt="Back arrow" />
                     <span>Confirm</span>
                 </button>

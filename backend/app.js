@@ -160,26 +160,19 @@ app.get("/api/logout", (req, res) => {
 })
 
 app.post("/api/mark", async (req, res) => {
-    try{
-        console.log('mark7');
-        console.log(req.body);
+    try {
         let assignmentId = req.body.assignment_id;
-        console.log('mark5');
         let studentId = req.body.student_id;
-        console.log('mark4');
         let courseId = await db.getCourseByAssignmentId(assignmentId);
-        console.log('mark3');
-        let canvasToken = await db.getUserById(req.session.userId).canvas_token;
-        console.log('mark2');
-        let canvasStudentId = await canvas.getStudentInfo(canvasToken,studentId, courseId);
-        console.log('mark1');
+        let user = await db.getUserById(req.session.userId);
+        let canvasStudent = await canvas.getStudentInfo(user.canvas_token, studentId, courseId);
 
-        await canvas.markStudent(canvasToken, courseId, assignmentId, canvasStudentId);
+        await canvas.markStudent(user.canvas_token, courseId, assignmentId, canvasStudent.id);
         await db.markStudent(assignmentId, studentId, req.session.userId);
 
         console.log('student marked poggers');
 
-    }catch(e){
+    } catch (e) {
         console.log('some error occured');
         console.log(e);
         return res.sendStatus(500);

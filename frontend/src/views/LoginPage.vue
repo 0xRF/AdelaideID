@@ -44,8 +44,11 @@ const isFormValid = computed(
             <input v-model="password" type="password" :disabled="submitting" />
         </div>
 
-        <p>Don't have an account?  <b><router-link to="/register">Register here</router-link></b></p>
-        
+        <p>
+            Don't have an account?
+            <b><router-link to="/register">Register here</router-link></b>
+        </p>
+
         <div class="spacer" />
         <div class="confirmation-buttons">
             <button
