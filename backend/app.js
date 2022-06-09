@@ -94,6 +94,13 @@ app.get("/api/assignments", async (req, res) => {
     try {
         let user = await db.getUserById(req.session.userId);
         let assignments = await canvas.getAssignments(req.query.course_id, user.canvas_token);
+        for (let assignment of assignments) {
+            try {
+                await db.addAssignment(assignment.id, req.query.course_id);
+            } catch (err) {
+                if (err.code != 'ER_DUP_ENTRY') throw err;
+            }
+        }
         res.send(assignments);
     } catch (e) {
         console.error(e);
@@ -204,8 +211,8 @@ app.post("/api/partial", async (req, res) => {
         db.addPartial(course_id, asignment_id, student_id, first_name, last_name, student_id, path);
 
     } catch (e) {
-    console.log('e3');
-    console.log(e);
+        console.log('e3');
+        console.log(e);
         return res.sendStatus(500)
     }
 
