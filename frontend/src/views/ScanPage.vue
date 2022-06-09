@@ -73,6 +73,8 @@ onMounted(() => {
     if (props.className != null) store.commit("setHeaderText", props.className);
 });
 
+success.value = true;
+
 </script>
 
 <template>

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { onMounted } from "vue";
+
 import router from "../router";
 import store from "../store";
 import ClassCard from "../components/ClassCard.vue";
@@ -24,6 +25,7 @@ onMounted(async () => {
 
     classes.value = await res.json();
 });
+
 </script>
 
 <template>

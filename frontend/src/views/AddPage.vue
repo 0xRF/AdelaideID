@@ -36,6 +36,12 @@ const submit = async () => {
     });
     if (res.status != 200) console.log("error");
 };
+
+let seed = seedrandom(parseInt(router.currentRoute.value.params.id));
+
+const colour = ref(`background-color: hsl(${Math.round(seed() * 360)}, 100%, 90%)`);
+
+
 </script>
 
 <template>
