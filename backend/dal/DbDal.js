@@ -4,12 +4,8 @@ const config = require('config');
 /** @type {mysql.Pool} */
 var _pool = null;
 
-function isConnected() {
-    return !(_pool === null);
-};
-
 async function getConnection() {
-    if (!isConnected()) {
+    if (_pool === null) {
         _pool = mysql.createPool({
             connectionLimit: 100,
             host: config.has('db.host') ? config.get('db.host') : 'localhost',
