@@ -19,7 +19,12 @@ import { BrowserMultiFormatReader, Exception } from "@zxing/library";
 export default {
     name: "StreamBarcodeReader",
 
-    props: ["blur"],
+    props: {
+        blur: {
+            type: Number,
+            default: 0,
+        },
+    },
     data() {
         return {
             isLoading: false,
@@ -37,7 +42,7 @@ export default {
         }
 
         this.start();
-        this.$refs.scanner.oncanplay = (event) => {
+        this.$refs.scanner.oncanplay = () => {
             this.isLoading = false;
             this.$emit("loaded");
         };
@@ -52,7 +57,7 @@ export default {
             this.codeReader.decodeFromVideoDevice(
                 undefined,
                 this.$refs.scanner,
-                (result, err) => {
+                (result) => {
                     if (result) {
                         this.$emit("decode", result.text);
                     }

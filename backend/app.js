@@ -74,6 +74,18 @@ app.get("/api/self", async (req, res) => {
 })
 
 
+app.get("/api/course", async (req, res) => {
+    try {
+        let user = await db.getUserById(req.session.userId);
+        let courseId = req.query.course_id;
+        let course = await canvas.getCourse(courseId, user.canvas_token);
+        res.send(course);
+    } catch (e) {
+        console.error(e);
+        res.sendStatus(400);
+    }
+})
+
 app.get("/api/assignments", async (req, res) => {
     try {
         let user = await db.getUserById(req.session.userId);
@@ -86,6 +98,18 @@ app.get("/api/assignments", async (req, res) => {
             }
         }
         res.send(assignments);
+    } catch (e) {
+        console.error(e);
+        res.sendStatus(400);
+    }
+})
+
+app.get("/api/assignment", async (req, res) => {
+    try {
+        let user = await db.getUserById(req.session.userId);
+        let courseId = await db.getCourseByAssignmentId(req.query.assignment_id);
+        let assignment = await canvas.getAssignment(courseId, req.query.assignment_id, user.canvas_token);
+        res.send(assignment);
     } catch (e) {
         console.error(e);
         res.sendStatus(400);
@@ -163,6 +187,12 @@ app.post("/api/mark", async (req, res) => {
     try {
         let assignmentId = req.body.assignment_id;
         let studentId = req.body.student_id;
+
+        if (studentId.length == 8 && studentId[0] == 'a')
+            studentId = studentId.substr(1, 7);
+        else
+            return res.sendStatus(400);
+
         let courseId = await db.getCourseByAssignmentId(assignmentId);
         let user = await db.getUserById(req.session.userId);
         let canvasStudent = await canvas.getStudentInfo(user.canvas_token, studentId, courseId);

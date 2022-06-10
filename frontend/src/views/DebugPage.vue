@@ -15,10 +15,6 @@ const authenticated = ref(false);
 const student = ref("waiting for student...");
 const studentId = ref("waiting for student id...");
 
-const onDecode = (result) => {
-    studentId.value = result;
-};
-
 const getSession = async () => {
     console.log("fetching...");
     let res = await fetch("/api/session");

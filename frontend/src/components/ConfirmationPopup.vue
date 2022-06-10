@@ -2,10 +2,12 @@
 import { ref } from "vue";
 import seedrandom from "seedrandom";
 import router from "../router";
+import md5 from "md5";
 
-const props = defineProps({
+defineProps({
     id: {
         type: Number,
+        default: 0,
     },
     name: {
         type: String,
@@ -21,7 +23,7 @@ const props = defineProps({
     },
 });
 
-let seed = seedrandom(parseInt(router.currentRoute.value.params.id));
+let seed = seedrandom(md5(parseInt(router.currentRoute.value.params.id)));
 
 const colour = ref(
     `background-color: hsl(${Math.round(seed() * 360)}, 100%, 90%)`

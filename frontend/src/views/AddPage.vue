@@ -2,6 +2,7 @@
 import { ref, computed } from "vue";
 import router from "../router";
 import seedrandom from "seedrandom";
+import md5 from "md5";
 
 const first_name = ref("");
 const last_name = ref("");
@@ -42,7 +43,7 @@ const submit = async () => {
     router.back();
 };
 
-let seed = seedrandom(parseInt(router.currentRoute.value.params.id));
+let seed = seedrandom(md5(parseInt(router.currentRoute.value.params.id)));
 const colour = ref(
     `background-color: hsl(${Math.round(seed() * 360)}, 100%, 90%)`
 );

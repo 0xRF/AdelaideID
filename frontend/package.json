@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@zxing/library": "^0.19.1",
+        "md5": "^2.3.0",
         "seedrandom": "^3.0.5",
         "vue": "^3.2.25",
         "vue-router": "^4.0.15",

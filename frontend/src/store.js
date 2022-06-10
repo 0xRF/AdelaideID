@@ -5,6 +5,8 @@ let store = createStore({
     state: {
         isLoggedIn: localStorage.getItem("isLoggedIn") === "true",
         headerText: "",
+        courseNames: {},
+        classNames: {},
     },
     actions: {
         async login({ commit }, params) {
@@ -56,6 +58,12 @@ let store = createStore({
         },
         setHeaderText(state, val) {
             state.headerText = val;
+        },
+        addCourseName(state, val) {
+            state.courseNames[val.id] = val.name;
+        },
+        addClassName(state, val) {
+            state.classNames[val.id] = val.name;
         },
     },
 });

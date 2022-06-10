@@ -14,10 +14,6 @@ const confirmed = ref(false);
 
 const errorMessage = ref("Unknown error");
 
-const props = defineProps({
-    className: String,
-});
-
 const onDecode = async (result) => {
     try {
         if (failed.value) {
@@ -62,6 +58,12 @@ const onConfirm = async () => {
         },
     });
     if (res.status != 200) console.log("error marking student");
+    setTimeout(() => {
+        student.value = {};
+        success.value = false;
+        failed.value = false;
+        confirmed.value = false;
+    }, 1500);
 };
 
 const onCancel = () => {
@@ -69,8 +71,23 @@ const onCancel = () => {
     student.value = {};
 };
 
-onMounted(() => {
-    if (props.className != null) store.commit("setHeaderText", props.className);
+let className = ref("");
+
+onMounted(async () => {
+    if (!store.state.classNames[router.currentRoute.value.params.id]) {
+        let res = await fetch(
+            "/api/assignment?" +
+                new URLSearchParams({
+                    assignment_id: router.currentRoute.value.params.id,
+                })
+        );
+
+        let c = await res.json();
+        store.commit("addClassName", { id: c.id, name: c.name });
+    }
+    className.value =
+        store.state.classNames[router.currentRoute.value.params.id];
+    store.commit("setHeaderText", className.value);
 });
 </script>
 
@@ -94,7 +111,7 @@ onMounted(() => {
             <ConfirmationPopup
                 :name="student.first_name"
                 :confirmed="confirmed"
-                :class-name="props.className"
+                :class-name="className"
                 class="confirmation-popup"
                 @confirm="onConfirm"
                 @cancel="onCancel"
