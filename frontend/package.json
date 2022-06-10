@@ -7,7 +7,8 @@
         "build": "vite build",
         "serve": "vite preview --https",
         "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-        "format": "prettier . --write"
+        "format": "prettier . --write",
+        "https-preview": "serve dist"
     },
     "dependencies": {
         "@zxing/library": "^0.19.1",
@@ -21,8 +22,10 @@
         "eslint": "^8.15.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-vue": "^8.7.1",
+        "https-localhost": "^4.7.1",
         "prettier": "^2.6.2",
         "vite": "^2.9.9",
-        "vite-plugin-eslint": "^1.6.1"
+        "vite-plugin-eslint": "^1.6.1",
+        "vite-plugin-pwa": "^0.12.0"
     }
 }

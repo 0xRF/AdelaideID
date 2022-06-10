@@ -37,6 +37,13 @@ Follow the steps below carefully once you have completed your first-time setup.
 
 1. Ensure your MySQL/MariaDB service is running. 
 2. Launch the backend by navigating to `/backend` directory and running `node app.js`. You will need to leave this process running in the background.
+3. Navigate to the `/frontend` directory
+
+`PORT=4433 npm run https-preview`
+...
+
+
+
 3. Navigate to the `/frontend` directory and start the server with `npm run serve`. This serves the frontend over HTTPS (which is necessary for camera functionality) at `https://localhost:3000`. Appending the `--host` flag (`npm run serve -- --host`) will allow you to open the site from other clients on your local network.
 4. On your computer or a mobile device, enter the network address provided by the server.
 
@@ -48,3 +55,4 @@ Note that installing the PWA while hosting the server locally is ill-advised, as
 ## Notable Credits
 - [heroicons](https://github.com/tailwindlabs/heroicons) 
 - [Vue Barcode and QR code scanner](https://github.com/olefirenko/vue-barcode-reader) 
+- [vite-plugin-pwa](https://github.com/antfu/vite-plugin-pwa) 

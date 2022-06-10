@@ -47,7 +47,7 @@ const emit = defineEmits(["confirm", "cancel"]);
                     <img src="/assets/x-circle.svg" alt="Back arrow" />
                     <span>Cancel</span>
                 </button>
-                <button @click="emit('confirm')" class="confirmation-confirm">
+                <button class="confirmation-confirm" @click="emit('confirm')">
                     <img src="/assets/check-circle.svg" alt="Back arrow" />
                     <span>Confirm</span>
                 </button>

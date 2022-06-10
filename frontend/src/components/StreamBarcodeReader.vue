@@ -3,9 +3,9 @@
         <div v-if="!blur" class="overlay-element"></div>
         <div v-if="!blur" class="overlay-corners"></div>
         <video
-            :class="{ 'video-blur': blur }"
             v-show="!isLoading"
             ref="scanner"
+            :class="{ 'video-blur': blur }"
             poster="data:image/gif,AAAA"
         ></video>
     </div>

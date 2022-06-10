@@ -77,11 +77,11 @@ onMounted(() => {
 <template>
     <div>
         <StreamBarcodeReader
-            @decode="onDecode"
             :blur="success"
+            @decode="onDecode"
         ></StreamBarcodeReader>
 
-        <div class="confirmation-window" v-if="success">
+        <div v-if="success" class="confirmation-window">
             <div class="spacer"></div>
             <StudentCard
                 class="student-card"

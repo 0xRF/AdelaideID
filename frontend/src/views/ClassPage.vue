@@ -31,8 +31,8 @@ onMounted(async () => {
     <div class="classes">
         <ClassCard
             v-for="i in classes"
-            :key="i.id"
             :id="i.id"
+            :key="i.id"
             :title="i.name"
             :details="i.name"
             :course-id="router.currentRoute.value.params.id"

@@ -81,9 +81,9 @@ getSession();
 <template>
     <div>
         <StudentCard
-            v-bind:firstName="student.first_name"
-            v-bind:lastName="student.last_name"
-            v-bind:studentPhoto="student.photo_path"
+            :first-name="student.first_name"
+            :last-name="student.last_name"
+            :student-photo="student.photo_path"
         />
 
         <div v-if="loaded" id="debug">

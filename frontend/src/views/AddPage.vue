@@ -53,32 +53,32 @@ const colour = ref(
         <div class="manual-add-name">
             <div>
                 <label for="first-name-input"><b>First Name</b></label>
-                <input v-model="first_name" id="first-name-input" type="text" />
+                <input id="first-name-input" v-model="first_name" type="text" />
             </div>
             <div>
                 <label for="last-name-input"><b>Last Name</b></label>
-                <input v-model="last_name" id="last-name-input" type="text" />
+                <input id="last-name-input" v-model="last_name" type="text" />
             </div>
         </div>
         <div>
             <label for="student-id-input"><b>Student ID (optional)</b></label>
 
             <input
-                placeholder="a1234567"
-                v-model="student_id"
                 id="student-id-input"
+                v-model="student_id"
+                placeholder="a1234567"
                 type="text"
             />
         </div>
         <div class="image-container">
             <label><b>Image</b></label>
             <input
-                @change="uploadImage($event)"
                 id="hidden-image-upload"
                 type="file"
                 accept="image/*"
                 capture="environment"
                 hidden
+                @change="uploadImage($event)"
             />
             <label
                 for="hidden-image-upload"
