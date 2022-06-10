@@ -38,6 +38,8 @@ const submit = async () => {
         body: formData,
     });
     if (res.status != 200) console.log("error");
+
+    router.back();
 };
 
 let seed = seedrandom(parseInt(router.currentRoute.value.params.id));
