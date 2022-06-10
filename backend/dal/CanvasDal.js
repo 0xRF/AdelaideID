@@ -47,9 +47,9 @@ async function getCourse(courseId, bearer_token) {
         });
 
     return {
-        id: v.id,
-        name: v.name,
-        course_code: v.course_code
+        id: v.data.id,
+        name: v.data.name,
+        course_code: v.data.course_code
     };
 };
 
@@ -84,9 +84,9 @@ async function getAssignment(course_id, assignment_id, bearer_token) {
             }
         });
     return {
-        id: v.id,
-        name: v.name,
-        due_at: v.due_at,
+        id: v.data.id,
+        name: v.data.name,
+        due_at: v.data.due_at,
     };
 };
 

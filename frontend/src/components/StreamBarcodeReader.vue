@@ -2,7 +2,12 @@
     <div class="scanner-container">
         <div v-if="!blur" class="overlay-element"></div>
         <div v-if="!blur" class="overlay-corners"></div>
-        <video v-show="!isLoading" ref="scanner" :class="{ 'video-blur': blur }" poster="data:image/gif,AAAA"></video>
+        <video
+            v-show="!isLoading"
+            ref="scanner"
+            :class="{ 'video-blur': blur }"
+            poster="data:image/gif,AAAA"
+        ></video>
     </div>
 </template>
 
@@ -16,9 +21,9 @@ export default {
 
     props: {
         blur: {
-         type: Number,
-         default: 0
-        }
+            type: Number,
+            default: 0,
+        },
     },
     data() {
         return {
@@ -87,16 +92,18 @@ video {
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
 
-    clip-path: polygon(0% 0%,
-            0% 100%,
-            28px 100%,
-            28px calc(50% - (50vw - 28px)),
-            calc(100% - 28px) calc(50% - (50vw - 28px)),
-            calc(100% - 28px) calc(50% + (50vw - 28px)),
-            28px calc(50% + (50vw - 28px)),
-            28px 100%,
-            100% 100%,
-            100% 0%);
+    clip-path: polygon(
+        0% 0%,
+        0% 100%,
+        28px 100%,
+        28px calc(50% - (50vw - 28px)),
+        calc(100% - 28px) calc(50% - (50vw - 28px)),
+        calc(100% - 28px) calc(50% + (50vw - 28px)),
+        28px calc(50% + (50vw - 28px)),
+        28px 100%,
+        100% 100%,
+        100% 0%
+    );
 }
 
 .overlay-corners {
@@ -109,16 +116,26 @@ video {
     right: 0;
     margin: 0 auto;
 
-    background: linear-gradient(to right,
-            var(--outline-color) 3px,
-            transparent 3px) 0 0,
-        linear-gradient(to right, var(--outline-color) 3px, transparent 3px) 0 100%,
-        linear-gradient(to left, var(--outline-color) 3px, transparent 3px) 100% 0,
-        linear-gradient(to left, var(--outline-color) 3px, transparent 3px) 100% 100%,
-        linear-gradient(to bottom, var(--outline-color) 3px, transparent 3px) 0 0,
-        linear-gradient(to bottom, var(--outline-color) 3px, transparent 3px) 100% 0,
-        linear-gradient(to top, var(--outline-color) 3px, transparent 3px) 0 100%,
-        linear-gradient(to top, var(--outline-color) 3px, transparent 3px) 100% 100%;
+    background: linear-gradient(
+                to right,
+                var(--outline-color) 3px,
+                transparent 3px
+            )
+            0 0,
+        linear-gradient(to right, var(--outline-color) 3px, transparent 3px) 0
+            100%,
+        linear-gradient(to left, var(--outline-color) 3px, transparent 3px) 100%
+            0,
+        linear-gradient(to left, var(--outline-color) 3px, transparent 3px) 100%
+            100%,
+        linear-gradient(to bottom, var(--outline-color) 3px, transparent 3px) 0
+            0,
+        linear-gradient(to bottom, var(--outline-color) 3px, transparent 3px)
+            100% 0,
+        linear-gradient(to top, var(--outline-color) 3px, transparent 3px) 0
+            100%,
+        linear-gradient(to top, var(--outline-color) 3px, transparent 3px) 100%
+            100%;
 
     background-repeat: no-repeat;
     background-size: 28px 28px;

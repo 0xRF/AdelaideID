@@ -17,7 +17,6 @@ const routes = [
         path: "/course/:id",
         name: "Classes",
         component: () => import("./views/ClassPage.vue"),
-        props: true,
         meta: {
             requiresAuth: true,
         },
@@ -36,7 +35,6 @@ const routes = [
         path: "/scan/:id",
         name: "Scan",
         component: () => import("./views/ScanPage.vue"),
-        props: true,
         meta: {
             fullscreen: true,
             invert: true,
@@ -47,7 +45,6 @@ const routes = [
         path: "/add/:id",
         name: "Manual Add",
         component: () => import("./views/AddPage.vue"),
-        props: true,
         meta: {
             requiresAuth: true,
         },

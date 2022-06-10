@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { onMounted } from "vue";
+import store from "../store";
 import CourseCard from "../components/CourseCard.vue";
 
 const courses = ref([]);
@@ -8,6 +9,11 @@ const courses = ref([]);
 onMounted(async () => {
     let res = await fetch("/api/courses");
     courses.value = await res.json();
+    for (let course of courses.value) {
+        if (!store.state.courseNames[course.id]) {
+            store.commit("addCourseName", { id: course.id, name: course.name });
+        }
+    }
 });
 </script>
 
