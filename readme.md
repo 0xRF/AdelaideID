@@ -37,7 +37,7 @@ Follow the steps below carefully once you have completed your first-time setup.
 
 1. Ensure your MySQL/MariaDB service is running. 
 2. Launch the backend by navigating to `/backend` directory and running `node app.js`. You will need to leave this process running in the background.
-3. Navigate to the `/frontend` directory and start the server with `npm run dev`. This serves the frontend over HTTPS (which is necessary for camera functionality) at `https://localhost:3000`. Appending the `--host` flag (`npm run dev -- --host`) will allow you to open the site from other clients on your local network.
+3. Navigate to the `/frontend` directory and start the server with `npm run serve`. This serves the frontend over HTTPS (which is necessary for camera functionality) at `https://localhost:3000`. Appending the `--host` flag (`npm run serve -- --host`) will allow you to open the site from other clients on your local network.
 4. On your computer or a mobile device, enter the network address provided by the server.
 
 Without an associated SSL certificate, your browser will give you a security warning. You can proceed by clicking under the 'advanced' options presented on the warning screen.
