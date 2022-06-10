@@ -38,6 +38,21 @@ async function getStudentInfo(bearer_token, student_id, course_id) {
     return userInfo.data;
 };
 
+async function getCourse(courseId, bearer_token) {
+    let v = await axios.get(CANVAS_ENDPOINT + "courses" + "/" + courseId,
+        {
+            headers: {
+                "Authorization": `Bearer ${bearer_token}`
+            }
+        });
+
+    return {
+        id: v.id,
+        name: v.name,
+        course_code: v.course_code
+    };
+};
+
 
 async function getCourses(bearer_token) {
     let courses = await axios.get(CANVAS_ENDPOINT + "courses",
@@ -59,6 +74,22 @@ async function getCourses(bearer_token) {
         course_code: v.course_code
     }))
 };
+
+
+async function getAssignment(course_id, assignment_id, bearer_token) {
+    let v = await axios.get(`${CANVAS_ENDPOINT}courses/${course_id}/assignments/${assignment_id}`,
+        {
+            headers: {
+                "Authorization": `Bearer ${bearer_token}`
+            }
+        });
+    return {
+        id: v.id,
+        name: v.name,
+        due_at: v.due_at,
+    };
+};
+
 
 async function getAssignments(course_id, bearer_token) {
     let assignments = await axios.get(`${CANVAS_ENDPOINT}courses/${course_id}/assignments`,
@@ -85,6 +116,8 @@ module.exports = {
     getSelf,
     getStudentInfo,
     getCourses,
+    getCourse,
     getAssignments,
+    getAssignment,
     markStudent
 }
