@@ -30,24 +30,18 @@ If you added a password to this new user, add the key `"password"` to the `"db"`
 Before starting the express server, run `npm install` in the `/backend` directory to add all necessary dependencies.
 
 ### Frontend preparation
-Download all dependencies using `npm install`, making sure `/frontend` is your current working directory.
+Download all dependencies and build the server using `npm install && npm run build`, making sure `/frontend` is your current working directory.
 
 ## Usage
 Follow the steps below carefully once you have completed your first-time setup. 
 
 1. Ensure your MySQL/MariaDB service is running. 
 2. Launch the backend by navigating to `/backend` directory and running `node app.js`. You will need to leave this process running in the background.
-3. Navigate to the `/frontend` directory
-
-`PORT=4433 npm run https-preview`
-...
-
-
-
-3. Navigate to the `/frontend` directory and start the server with `npm run serve`. This serves the frontend over HTTPS (which is necessary for camera functionality) at `https://localhost:3000`. Appending the `--host` flag (`npm run serve -- --host`) will allow you to open the site from other clients on your local network.
+3. Run `PORT=4433 npm run https-preview`. The first time you run this command it will generate and install the local certificates, so you may have to re-run the command as root.
+4. Copy the `localhost.crt` certificate and `localhost.key` onto your mobile device. On linux these will likely be located under `~/.config/https-localhost`.
 4. On your computer or a mobile device, enter the network address provided by the server.
 
-Without an associated SSL certificate, your browser will give you a security warning. You can proceed by clicking under the 'advanced' options presented on the warning screen.
+Without an associated SSL certificate, your browser will give you a security warning and the PWA service worker will not work.
 
 Note that installing the PWA while hosting the server locally is ill-advised, as the private IP address of your host device is unlikely static. 
 
