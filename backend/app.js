@@ -163,6 +163,12 @@ app.post("/api/mark", async (req, res) => {
     try {
         let assignmentId = req.body.assignment_id;
         let studentId = req.body.student_id;
+
+        if(studentId.length == 8 && studentId[0] == 'a')
+            studentId = studentId.substr(1,7);
+        else
+           return res.sendStatus(400);
+
         let courseId = await db.getCourseByAssignmentId(assignmentId);
         let user = await db.getUserById(req.session.userId);
         let canvasStudent = await canvas.getStudentInfo(user.canvas_token, studentId, courseId);

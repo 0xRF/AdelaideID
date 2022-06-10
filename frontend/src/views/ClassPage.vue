@@ -9,8 +9,17 @@ import ClassCard from "../components/ClassCard.vue";
 const classes = ref([]);
 
 const props = defineProps({
-    courseName: String,
+    courseName: {
+        type: String,
+        default: ""
+    }
 });
+
+
+const getDate = (item) => {
+    let _date = new Date(item.due_at);
+    return _date.toLocaleString("en-AU", { weekday: 'long', month: 'long', day: 'numeric' });
+};
 
 onMounted(async () => {
     if (props.courseName != null)
@@ -18,25 +27,22 @@ onMounted(async () => {
 
     let res = await fetch(
         "/api/assignments?" +
-            new URLSearchParams({
-                course_id: router.currentRoute.value.params.id,
-            })
+        new URLSearchParams({
+            course_id: router.currentRoute.value.params.id,
+        })
     );
 
     classes.value = await res.json();
+    console.log(classes.value);
+
+
 });
 </script>
 
 <template>
     <div class="classes">
-        <ClassCard
-            v-for="i in classes"
-            :id="i.id"
-            :key="i.id"
-            :title="i.name"
-            :details="i.name"
-            :course-id="router.currentRoute.value.params.id"
-        />
+        <ClassCard v-for="i in classes" :id="i.id" :key="i.id" :title="i.name" :details="getDate(i)"
+            :course-id="router.currentRoute.value.params.id" />
     </div>
 </template>
 

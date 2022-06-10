@@ -15,7 +15,7 @@ const confirmed = ref(false);
 const errorMessage = ref("Unknown error");
 
 const props = defineProps({
-    className: String,
+    className: { type: String, default: "" }
 });
 
 const onDecode = async (result) => {
@@ -47,6 +47,7 @@ const onDecode = async (result) => {
         failed.value = true;
         setTimeout(() => (failed.value = false), 3000);
     }
+
 };
 
 const onConfirm = async () => {
@@ -62,6 +63,12 @@ const onConfirm = async () => {
         },
     });
     if (res.status != 200) console.log("error marking student");
+    setTimeout(() => {
+        student.value = {};
+        success.value = false;
+        failed.value = false;
+        confirmed.value = false;
+    }, 1500);
 };
 
 const onCancel = () => {
@@ -76,68 +83,37 @@ onMounted(() => {
 
 <template>
     <div>
-        <StreamBarcodeReader
-            :blur="success"
-            @decode="onDecode"
-        ></StreamBarcodeReader>
+        <StreamBarcodeReader :blur="success" @decode="onDecode"></StreamBarcodeReader>
 
         <div v-if="success" class="confirmation-window">
             <div class="spacer"></div>
-            <StudentCard
-                class="student-card"
-                :first-name="student.first_name"
-                :last-name="student.last_name"
-                :student-id="student.student_id"
-                :student-photo="student.photo_path"
-            />
+            <StudentCard class="student-card" :first-name="student.first_name" :last-name="student.last_name"
+                :student-id="student.student_id" :student-photo="student.photo_path" />
             <div class="spacer"></div>
-            <ConfirmationPopup
-                :name="student.first_name"
-                :confirmed="confirmed"
-                :class-name="props.className"
-                class="confirmation-popup"
-                @confirm="onConfirm"
-                @cancel="onCancel"
-            />
+            <ConfirmationPopup :name="student.first_name" :confirmed="confirmed" :class-name="props.className"
+                class="confirmation-popup" @confirm="onConfirm" @cancel="onCancel" />
         </div>
 
         <div v-if="!failed" class="scan-idle-options">
             <p class="scan-idle-hint">
                 Scan barcode on the back of student ID card
             </p>
-            <button
-                class="manual-add"
-                @click="
-                    router.push({
-                        name: 'Manual Add',
-                        params: { id: router.currentRoute.value.params.id },
-                    })
-                "
-            >
-                <img
-                    class="icon"
-                    src="/assets/plus-circle.svg"
-                    alt="Settings icon"
-                />
+            <button class="manual-add" @click="
+                router.push({
+                    name: 'Manual Add',
+                    params: { id: router.currentRoute.value.params.id },
+                })
+            ">
+                <img class="icon" src="/assets/plus-circle.svg" alt="Settings icon" />
                 <span>Add manually</span>
             </button>
         </div>
         <div v-else class="scan-fail-parent">
             <div class="scan-fail-message">
-                <svg
-                    alt="Back arrow"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
+                <svg alt="Back arrow" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <b>{{ errorMessage }}</b>
             </div>
