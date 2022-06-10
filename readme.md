@@ -46,6 +46,9 @@ Without an associated SSL certificate, your browser will give you a security war
 Note that installing the PWA while hosting the server locally is ill-advised, as the private IP address of your host device is unlikely static. 
 
 
+## Additional Information
+Note that you will not be able to mark off users in the "CS Testing 1" MyUni class as all members are marked as teachers. However, for testing purposes, we've added some dummy students to the 'Students' table. 
+
 ## Notable Credits
 - [heroicons](https://github.com/tailwindlabs/heroicons) 
 - [Vue Barcode and QR code scanner](https://github.com/olefirenko/vue-barcode-reader) 
