@@ -2,8 +2,6 @@
 
 Find marking workshops, practicals and exams error-prone and tedious? Adelaide ID makes taking attendance easy, allowing you to validate and mark students with a simple barcode-scan of the back of the ID card. The project is designed for mobile and can be installed as a [progressive web app (PWA)](https://support.google.com/chrome/answer/9658361?hl=en&co=GENIE.Platform%3DAndroid&oco=0).
 
-Web and Database Computing (Semester 1, 2022) group project by Rowan Fimmano, Javad Hamidi, Mitchell Kempen and Zhaohan Liu.
-
 ## Installation & Setup
 ### Backend preparation
 Make sure you have MySQL or MariaDB installed. Then navigate to the `/backend/db` directory. Next, start the MySQL CLI and run the command `source attendance.sql`. This will create and populate the `dbAttendance` database.
